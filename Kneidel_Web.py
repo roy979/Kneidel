@@ -1,10 +1,12 @@
 import os
 import pygame
 import random
+import requests
 import tkinter as tk
-from tkinter import ttk, filedialog
+from tkinter import ttk
 from threading import Thread
 from time import sleep
+from urllib.parse import quote
 from pydub import AudioSegment
 import tempfile
 import spotipy
@@ -17,6 +19,8 @@ sp = spotipy.Spotify(auth_manager=SpotifyClientCredentials(
 
 # === Setup Pygame Mixer ===
 pygame.mixer.init()
+
+BASE_URL = "http://0f5e663b-cb9d-4eb5-bf97-95caddbdade4-00-i82hhenc0n59.pike.replit.dev"
 
 # === GUI Setup ===
 class SongGameGUI:
@@ -43,7 +47,7 @@ class SongGameGUI:
         btn_frame = tk.Frame(self.root, bg="white")
         btn_frame.pack(pady=20)
 
-        self.play_button = ttk.Button(btn_frame, text="\u23EF Play\Pause", command=self.play_pause_audio)
+        self.play_button = ttk.Button(btn_frame, text="\u23EF Play/Pause", command=self.play_pause_audio)
         self.play_button.grid(row=0, column=0, padx=10)
 
         self.skip_button = ttk.Button(btn_frame, text="\u23ED Skip", command=self.skip_stage)
@@ -222,24 +226,6 @@ class SongGameGUI:
         self.progress = 0
         self.search_var.set("")
 
-    def choose_package_folder(self):
-        package_folder = filedialog.askdirectory(title="Select Package Folder")
-        self.package_folder = package_folder
-        if not package_folder:
-            return
-
-        # List subfolders
-        self.song_folders = [os.path.join(package_folder, d) for d in os.listdir(package_folder)
-                            if os.path.isdir(os.path.join(package_folder, d))]
-        random.shuffle(self.song_folders)
-
-        if not self.song_folders:
-            self.feedback_label.config(text="No song folders were found inside the selected package", fg="red")
-            return
-
-        self.current_song_index = 0
-        self.load_current_song()
-
     def load_current_song(self):
         if self.current_song_index >= len(self.song_folders):
             self.feedback_label.config(text="🎵 You've finished all songs!", fg="blue")
@@ -256,16 +242,25 @@ class SongGameGUI:
     def load_stage_tracks(self):
         if not self.song_folder:
             return
+
+        # song_folder should be a relative path like: Packages/package_name/htdemucs_6s/song_name
+        # Extract only the part after "Packages/"
+        relative_path = self.song_folder.split("Packages/")[-1]  # e.g. 'Songle/htdemucs_6s/Buddy Holly'
+        encoded_folder = quote(relative_path)  # URL-safe path
+
         self.instruments = self.rank_instruments_by_band_psd(self.song_folder)
         self.create_stage_widgets(len(self.instruments))
         self.loaded_tracks = []
+
         for stage in self.instruments:
-            track_path = os.path.join(self.song_folder, f"{stage}.flac")
-            if os.path.exists(track_path):
-                track = AudioSegment.from_file(track_path)
+            track_url = f"{BASE_URL}/{encoded_folder}/{stage}.flac"
+            try:
+                temp_path = self.download_file_from_url(track_url)
+                track = AudioSegment.from_file(temp_path)
                 self.loaded_tracks.append(track)
-            else:
-                print(f"Track not found: {track_path}")
+            except Exception as e:
+                print(f"Failed to load {track_url}: {e}")
+                self.loaded_tracks.append(None)  # Preserve indexing even if load fails
 
     def update_search_suggestions(self, event=None):
         query = self.search_var.get().strip()
@@ -351,41 +346,47 @@ class SongGameGUI:
 
         tk.Label(selector, text="Select packages to include:").pack(pady=10)
 
-        packages_dir = "./Packages"
-        if not os.path.exists(packages_dir):
-            self.feedback_label.config(text="Could not find './Packages' directory!", fg="red")
+        # Fetch package manifest from server
+        try:
+            response = requests.get(f"{BASE_URL}/list_packages")
+            print(f"{BASE_URL}/list_packages")
+            print(f"response: {response}")
+            print(f"response text: {response.text}")
+            response.raise_for_status()
+            packages_manifest = response.json()
+            print(packages_manifest)
+        except Exception as e:
+            self.feedback_label.config(text=f"Failed to fetch packages list: {e}", fg="red")
+            print(e)
             return
 
         self.package_vars = {}
-        for folder in os.listdir(packages_dir):
-            full_path = os.path.join(packages_dir, folder)
-            if os.path.isdir(full_path):
-                var = tk.BooleanVar(value=False)
-                chk = tk.Checkbutton(selector, text=folder, variable=var)
-                chk.pack(anchor='w')
-                self.package_vars[folder] = var
+        for package_name in packages_manifest:
+            var = tk.BooleanVar(value=False)
+            chk = tk.Checkbutton(selector, text=package_name, variable=var)
+            chk.pack(anchor='w')
+            self.package_vars[package_name] = var
 
         def confirm_selection():
-            selected = [f for f, v in self.package_vars.items() if v.get()]
+            selected = [pkg for pkg, var in self.package_vars.items() if var.get()]
             if not selected:
                 self.feedback_label.config(text="Select at least one package!", fg="red")
                 return
 
             song_folders = []
             for package_name in selected:
-                htdemucs_path = os.path.join(packages_dir, package_name, "htdemucs_6s")
-                if not os.path.exists(htdemucs_path):
-                    continue
-                for song_folder in os.listdir(htdemucs_path):
-                    full_song_path = os.path.join(htdemucs_path, song_folder)
-                    if os.path.isdir(full_song_path):
-                        song_folders.append(full_song_path)
+                # From the manifest, get list of songs under htdemucs_6s for this package
+                htdemucs_songs = packages_manifest.get(package_name, {}).get("htdemucs_6s", [])
+                for song in htdemucs_songs:
+                    # Compose remote folder path, matching your previous scheme (relative to /packages/)
+                    folder_path = f"{package_name}/htdemucs_6s/{song}"
+                    song_folders.append(folder_path)
 
             if not song_folders:
                 self.feedback_label.config(text="No valid songs found in selected packages.", fg="red")
                 return
 
-            self.package_folder = packages_dir
+            self.package_folder = None  # Since no local folder, or you can store BASE_URL
             self.song_folders = song_folders
             random.shuffle(self.song_folders)
             self.current_song_index = 0
@@ -393,8 +394,6 @@ class SongGameGUI:
             selector.destroy()
 
         ttk.Button(selector, text="Start Game", command=confirm_selection).pack(pady=10)
-
-
 
     @staticmethod
     def rank_instruments_by_band_psd(song_folder):
