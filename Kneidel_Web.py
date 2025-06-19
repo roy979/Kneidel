@@ -16,7 +16,7 @@ GITHUB_USER    = "roy979"
 GITHUB_REPO    = "Kneidel"
 BASE_URL       = f"https://raw.githubusercontent.com/{GITHUB_USER}/{GITHUB_REPO}/main/Packages"
 API_BASE       = f"https://api.github.com/repos/{GITHUB_USER}/{GITHUB_REPO}/contents/Packages"
-GITHUB_TOKEN   = os.getenv("GITHUB_TOKEN") or "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"
+GITHUB_TOKEN   = os.getenv("GITHUB_TOKEN") or "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"
 HEADERS        = {"Authorization": f"token {GITHUB_TOKEN}"} if GITHUB_TOKEN else {}
 
 sp = spotipy.Spotify(auth_manager=SpotifyClientCredentials(
@@ -178,8 +178,6 @@ class Kneidel:
 
         start_btn.config(command=confirm)
 
-
-
     def _preload(self, idx):
         """Download just one song folder (FLAC stems) into temp_root."""
         remote = self.remote_songs[idx]
@@ -193,7 +191,6 @@ class Kneidel:
                     data = requests.get(f['download_url'], headers=HEADERS).content
                     open(os.path.join(local_dir, f['name']), 'wb').write(data)
         self.local_queue.append(local_dir)
-        print("appended")
 
     def _load_current(self):
         """Load current from local_queue and preload the next+1 entry if any."""
