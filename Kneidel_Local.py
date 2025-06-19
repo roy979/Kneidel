@@ -2,7 +2,7 @@ import os
 import pygame
 import random
 import tkinter as tk
-from tkinter import ttk, filedialog
+from tkinter import ttk
 from threading import Thread
 from time import sleep
 from pydub import AudioSegment
@@ -19,7 +19,7 @@ sp = spotipy.Spotify(auth_manager=SpotifyClientCredentials(
 pygame.mixer.init()
 
 # === GUI Setup ===
-class SongGameGUI:
+class Kneidel:
     def __init__(self, root):
         self.package_folder = None
         self.song_folders = []
@@ -43,22 +43,22 @@ class SongGameGUI:
         btn_frame = tk.Frame(self.root, bg="white")
         btn_frame.pack(pady=20)
 
-        self.play_button = ttk.Button(btn_frame, text="\u23EF Play\Pause", command=self.play_pause_audio)
+        self.play_button = ttk.Button(btn_frame, text="\u23EF Play\Pause", command=self.Button_action_play_pasue)
         self.play_button.grid(row=0, column=0, padx=10)
 
-        self.skip_button = ttk.Button(btn_frame, text="\u23ED Skip", command=self.skip_stage)
+        self.skip_button = ttk.Button(btn_frame, text="\u23ED Skip", command=self.Button_action_skip_stage)
         self.skip_button.grid(row=0, column=1, padx=10)
 
-        self.rewind_button = ttk.Button(btn_frame, text="\u23EA Rewind", command=self.rewind_audio)
+        self.rewind_button = ttk.Button(btn_frame, text="\u23EA Rewind", command=self.Button_action_rewind)
         self.rewind_button.grid(row=0, column=2, padx=10)
 
-        self.choose_folder_button = tk.Button(root, text="Select Package", command=self.open_package_selector)
+        self.choose_folder_button = tk.Button(root, text="Select Package", command=self.Button_action_select_package)
         self.choose_folder_button.pack()
 
         guess_frame = tk.Frame(self.root, bg="white")
         guess_frame.pack(pady=10)
 
-        self.guess_button = ttk.Button(guess_frame, text="Guess", command=self.check_guess)
+        self.guess_button = ttk.Button(guess_frame, text="Guess", command=self.Button_action_guess)
         self.guess_button.grid(row=0, column=1, padx=5)
 
         self.search_var = tk.StringVar()
@@ -74,7 +74,7 @@ class SongGameGUI:
         self.feedback_label = tk.Label(self.root, text="", bg="white", fg="green", font=("Arial", 14))
         self.feedback_label.pack(pady=5)
 
-        self.next_song_button = ttk.Button(self.root, text="Next Song", command=self.next_song)
+        self.next_song_button = ttk.Button(self.root, text="Next Song", command=self.Button_action_next_song)
         self.next_song_button.pack(pady=5)
         self.next_song_button.pack_forget()
 
@@ -124,7 +124,7 @@ class SongGameGUI:
             mixed.export(tmp.name, format="wav")
             self.current_mix_path = tmp.name  # Save path for playback
 
-    def play_pause_audio(self):
+    def Button_action_play_pasue(self):
         if not self.package_folder:
             self.feedback_label.config(text="Choose Packages First", fg="red")
             return
@@ -160,7 +160,7 @@ class SongGameGUI:
 
         Thread(target=update_progress, daemon=True).start()
 
-    def rewind_audio(self):
+    def Button_action_rewind(self):
         if not self.package_folder:
             self.feedback_label.config(text="Choose Packages First", fg="red")
             return
@@ -171,26 +171,24 @@ class SongGameGUI:
         pygame.mixer.music.stop()
         pygame.mixer.music.play(start=self.progress)
 
-    def skip_stage(self):
+    def Button_action_skip_stage(self):
         if not self.package_folder:
             self.feedback_label.config(text="Choose Packages First", fg="red")
             return
-        pygame.mixer.music.stop()
-        self.is_playing = False  # Add this
-        self.reset_progress()
 
         if self.stage < len(self.instruments) - 1:
+            pygame.mixer.music.stop()
+            self.is_playing = False 
             self.stage += 1
+            self.reset_all_progress()
             self.update_stage_highlight()
         else:
             correct = os.path.basename(os.path.normpath(self.song_folder))
-            self.feedback_label.config(text=f"{correct}", fg="red")
+            self.feedback_label.config(text=f"{correct}", fg="green")
             self.next_song_button.pack()
             return
 
-        self.reset_progress()
-
-    def check_guess(self):
+    def Button_action_guess(self):
         if not self.package_folder:
             self.feedback_label.config(text="Choose Packages First", fg="red")
             return
@@ -207,38 +205,14 @@ class SongGameGUI:
             self.feedback_label.config(text="Correct! 🎉", fg="green")
             self.next_song_button.pack()
         else:
-            self.skip_stage()
+            self.Button_action_skip_stage()
             self.feedback_label.config(text="Incorrect. Try again!", fg="red")
-
-    def reset_progress(self):
-        if self.stage < len(self.bars):
-            self.bars[self.stage]["value"] = 0
-        self.progress = 0
-        self.search_var.set("")
 
     def reset_all_progress(self):
         for bar in self.bars:
             bar["value"] = 0
         self.progress = 0
         self.search_var.set("")
-
-    def choose_package_folder(self):
-        package_folder = filedialog.askdirectory(title="Select Package Folder")
-        self.package_folder = package_folder
-        if not package_folder:
-            return
-
-        # List subfolders
-        self.song_folders = [os.path.join(package_folder, d) for d in os.listdir(package_folder)
-                            if os.path.isdir(os.path.join(package_folder, d))]
-        random.shuffle(self.song_folders)
-
-        if not self.song_folders:
-            self.feedback_label.config(text="No song folders were found inside the selected package", fg="red")
-            return
-
-        self.current_song_index = 0
-        self.load_current_song()
 
     def load_current_song(self):
         if self.current_song_index >= len(self.song_folders):
@@ -252,20 +226,6 @@ class SongGameGUI:
         self.update_stage_highlight()
         self.reset_all_progress()
         self.load_stage_tracks()
-
-    def load_stage_tracks(self):
-        if not self.song_folder:
-            return
-        self.instruments = self.rank_instruments_by_band_psd(self.song_folder)
-        self.create_stage_widgets(len(self.instruments))
-        self.loaded_tracks = []
-        for stage in self.instruments:
-            track_path = os.path.join(self.song_folder, f"{stage}.flac")
-            if os.path.exists(track_path):
-                track = AudioSegment.from_file(track_path)
-                self.loaded_tracks.append(track)
-            else:
-                print(f"Track not found: {track_path}")
 
     def update_search_suggestions(self, event=None):
         query = self.search_var.get().strip()
@@ -338,13 +298,48 @@ class SongGameGUI:
         # Update progress bar immediately
         bar["value"] = new_pos
 
-    def next_song(self):
+    def Button_action_next_song(self):
+        pygame.mixer.music.stop()
         self.next_song_button.pack_forget()
         self.feedback_label.config(text="")
         self.current_song_index += 1
+        self.reset_all_progress()
         self.load_current_song()
 
-    def open_package_selector(self):
+    @staticmethod
+    def sort_stages(song_folder):
+        """
+        After renaming is done, return a list of instrument file numbers as strings,
+        excluding any *_Quiet.flac files.
+        For example: ['1', '2', '3', '5'] if those files exist.
+        """
+        numbered = []
+        for fname in os.listdir(song_folder):
+            if fname.lower().endswith(".flac") and "_quiet" not in fname.lower():
+                name_no_ext = os.path.splitext(fname)[0]
+                if name_no_ext.isdigit():
+                    numbered.append(name_no_ext)
+
+        # Sort numerically as strings
+        return sorted(numbered, key=lambda x: int(x))
+    
+
+##############################################################################################
+    def load_stage_tracks(self):
+        if not self.song_folder:
+            return
+        self.instruments = self.sort_stages(self.song_folder)
+        self.create_stage_widgets(len(self.instruments))
+        self.loaded_tracks = []
+        for stage in self.instruments:
+            track_path = os.path.join(self.song_folder, f"{stage}.flac")
+            if os.path.exists(track_path):
+                track = AudioSegment.from_file(track_path)
+                self.loaded_tracks.append(track)
+            else:
+                print(f"Track not found: {track_path}")
+
+    def Button_action_select_package(self):
         selector = tk.Toplevel(self.root)
         selector.title("Select Packages")
         selector.geometry("300x400")
@@ -373,7 +368,7 @@ class SongGameGUI:
 
             song_folders = []
             for package_name in selected:
-                htdemucs_path = os.path.join(packages_dir, package_name, "htdemucs_6s")
+                htdemucs_path = os.path.join(packages_dir, package_name)
                 if not os.path.exists(htdemucs_path):
                     continue
                 for song_folder in os.listdir(htdemucs_path):
@@ -394,27 +389,8 @@ class SongGameGUI:
 
         ttk.Button(selector, text="Start Game", command=confirm_selection).pack(pady=10)
 
-
-
-    @staticmethod
-    def rank_instruments_by_band_psd(song_folder):
-        """
-        After renaming is done, return a list of instrument file numbers as strings,
-        excluding any *_Quiet.flac files.
-        For example: ['1', '2', '3', '5'] if those files exist.
-        """
-        numbered = []
-        for fname in os.listdir(song_folder):
-            if fname.lower().endswith(".flac") and "_quiet" not in fname.lower():
-                name_no_ext = os.path.splitext(fname)[0]
-                if name_no_ext.isdigit():
-                    numbered.append(name_no_ext)
-
-        # Sort numerically as strings
-        return sorted(numbered, key=lambda x: int(x))
-
 # === Run the GUI ===
 if __name__ == "__main__":
     root = tk.Tk()
-    gui = SongGameGUI(root)
+    gui = Kneidel(root)
     root.mainloop()

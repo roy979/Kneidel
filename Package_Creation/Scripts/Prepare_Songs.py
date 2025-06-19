@@ -1,5 +1,6 @@
 import os
 import sys
+import shutil
 import glob
 from pydub import AudioSegment
 import numpy as np
@@ -12,45 +13,53 @@ from core.audio_processor import process_audio
 from core.model import load_CRNN_model, make_predictions, MODEL_PATH
 
 
-def rename(folder_path):
-    if folder_path:
-        parent_dir = os.path.dirname(folder_path)
-        folder_name = os.path.basename(folder_path)
+def rename(package_folder):
+    if package_folder:
+        parent_dir = os.path.dirname(package_folder)
+        folder_name = os.path.basename(package_folder)
 
         # --- Rename the folder itself if needed ---
         if folder_name.startswith("[SPOTDOWNLOADER.COM] "):
             new_folder_name = folder_name.replace("[SPOTDOWNLOADER.COM] ", "", 1)
-            new_folder_path = os.path.join(parent_dir, new_folder_name)
-            os.rename(folder_path, new_folder_path)
+            new_package_folder = os.path.join(parent_dir, new_folder_name)
+            os.rename(package_folder, new_package_folder)
             print(f"Renamed folder: {folder_name} → {new_folder_name}")
-            folder_path = new_folder_path  # Update to new name
+            package_folder = new_package_folder  # Update to new name
 
         # --- Rename all files inside ---
-        for filename in os.listdir(folder_path):
+        for filename in os.listdir(package_folder):
             if filename.startswith("[SPOTDOWNLOADER.COM] "):
                 new_name = filename.replace("[SPOTDOWNLOADER.COM] ", "", 1)
-                old_path = os.path.join(folder_path, filename)
-                new_path = os.path.join(folder_path, new_name)
+                old_path = os.path.join(package_folder, filename)
+                new_path = os.path.join(package_folder, new_name)
                 os.rename(old_path, new_path)
                 print(f"Renamed file: {filename} → {new_name}")
 
-def create_run_file(folder_path):
+def create_run_file(package_folder):
     bat_content = f"""@echo off
-    echo Starting Demucs batch separation...
-    cd /d "%~dp0"
-    for %%i in ("{folder_path}\\*.mp3") do (
-        echo Processing: %%i
-        C:/Users/RoyWaisbord/anaconda3/python.exe -m demucs "%%i" -n htdemucs_6s --shifts 10 --overlap 0.25 --flac -d cpu -o "{folder_path}"
+echo Starting Demucs batch separation...
+cd /d "%~dp0"
+
+for %%i in ("{package_folder}\\*.mp3") do (
+    echo Processing: %%i
+    C:/Users/RoyWaisbord/anaconda3/python.exe -m demucs "%%i" -n htdemucs_6s --shifts 10 --overlap 0.25 --flac -d cpu -o "{package_folder}"
+    if errorlevel 1 (
+        echo Failed processing: %%i
+        pause
+        exit /b 1
     )
-    echo Done!
-    pause
-    """
-    # Save it as a batch file in the same folder as the Python script
+)
+
+echo All songs processed successfully.
+echo Deleting this script...
+del "%~f0"
+"""
     output_path = os.path.join(os.getcwd(), "Seperate_Songs.bat")
     with open(output_path, "w") as f:
         f.write(bat_content)
 
     print(f"Batch file created successfully at:\n{output_path}")
+
 
 def detect_choruses(audio_path: str, model_path: str = MODEL_PATH):
     """
@@ -183,32 +192,80 @@ def sort_instruments(song_path):
         os.rename(old_vocals_path, new_vocals_path)
         print(f"Renamed 'vocals.flac' → '6.flac'")
 
+def cleanup(package_folder):
+    """
+    Removes all files directly inside `package_folder` and moves all song folders from
+    subfolders like 'htdemucs_6s' to the main `package_folder`.
+
+    Example:
+        Packages/Songle/htdemucs_6s/Back To Black  -->  Packages/Songle/Back To Black
+    """
+    if not os.path.exists(package_folder):
+        print(f"Package folder does not exist: {package_folder}")
+        return
+
+    # Step 1: Delete all files directly inside the package folder
+    for item in os.listdir(package_folder):
+        full_path = os.path.join(package_folder, item)
+        if os.path.isfile(full_path):
+            try:
+                os.remove(full_path)
+                print(f"Deleted file: {full_path}")
+            except Exception as e:
+                print(f"Failed to delete {full_path}: {e}")
+
+    # Step 2: Move song folders from subfolders (e.g. htdemucs_6s) to the main folder
+    for root, dirs, files in os.walk(package_folder):
+        if root == package_folder:
+            continue  # Skip the main folder
+        for folder in dirs:
+            src = os.path.join(root, folder)
+            dest = os.path.join(package_folder, folder)
+            if os.path.exists(dest):
+                print(f"Warning: Destination already exists, skipping: {dest}")
+                continue
+            try:
+                os.rename(src, dest)
+                print(f"Moved: {src} --> {dest}")
+            except Exception as e:
+                print(f"Failed to move {src} to {dest}: {e}")
+        break  # Only process immediate subfolder level
+
+    # Optional: Remove now-empty folders (like htdemucs_6s)
+    for item in os.listdir(package_folder):
+        full_path = os.path.join(package_folder, item)
+        if os.path.isdir(full_path) and not os.listdir(full_path):
+            try:
+                shutil.rmtree(full_path)
+                print(f"Removed empty folder: {full_path}")
+            except Exception as e:
+                print(f"Failed to remove folder {full_path}: {e}")
+
 # === Parameters ===
 PSD_BAND = (20, 16000)  # Hz
 QUIET_THRESHOLD_RATIO = 0.1  # Below 10% of max PSD → Quiet
 
 if __name__ == "__main__":
-    folder_path = askdirectory(title="Select Unprocessed Songs Folder")
-    if not folder_path:
+    package_folder = askdirectory(title="Select Unprocessed Songs Folder")
+    if not package_folder:
         print("No folder selected.")
     else:
         try:
-            rename(folder_path)
+            rename(package_folder)
 
-            for song_path in glob.glob(os.path.join(folder_path, "*.mp3")):
+            for song_path in glob.glob(os.path.join(package_folder, "*.mp3")):
                 choruses = detect_choruses(song_path)
-
-                print(f"\nDetected Choruses for {os.path.basename(song_path)}:")
-                for idx, (start, end) in enumerate(choruses, 1):
-                    print(f"Chorus {idx}: {start:.2f}s - {end:.2f}s")
 
                 extract_longest_chorus(song_path, choruses)
 
-            for song_folder in os.listdir(folder_path):
-                song_path = os.path.join(folder_path, song_folder)
+            for song_folder in os.listdir(package_folder):
+                song_path = os.path.join(package_folder, song_folder)
                 if os.path.isdir(song_path):
                     sort_instruments(song_path)
 
-            create_run_file(folder_path)
+            create_run_file(package_folder)
+
+            cleanup(package_folder)
+
         except Exception as e:
             print(f"Error: {e}")
