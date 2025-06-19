@@ -2,7 +2,7 @@ from flask import Flask, jsonify
 import os
 
 app = Flask(__name__)
-GITHUB_TOKEN = os.environ['Git_Token']
+GITHUB_TOKEN = os.environ['GITHUB_TOKEN']
 
 @app.route("/api/token", methods=["GET"])
 def get_token():
