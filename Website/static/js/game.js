@@ -214,56 +214,73 @@ class KneidelGame {
         }
     }
 
-    async togglePlayPause() {
-        if (!this.currentSong) return;
-        
-        if (this.isPlaying) {
-            this.audioManager.pause();
-            this.isPlaying = false;
+async togglePlayPause() {
+    if (!this.currentSong) return;
+
+    // Toggle pause/unpause
+    if (this.isPlaying) {
+        if (this.audioManager.isPaused()) {
+            this.audioManager.unpause();
         } else {
-            await this.audioManager.play(this.currentStage);
-            this.isPlaying = true;
-            this.startProgressTracking();
+            this.audioManager.pause();
         }
-        
         this.updateUI();
+        return;
     }
 
-    startProgressTracking() {
-        if (this.progressInterval) clearInterval(this.progressInterval);
-        
-        this.progressInterval = setInterval(() => {
-            if (!this.isPlaying) return;
-            
+    // Start new playback
+    this.isPlaying = true;
+    this.currentProgress = 0;
+
+    try {
+        await this.audioManager.play(this.currentStage);
+    } catch (e) {
+        console.error("Playback load error:", e);
+        this.isPlaying = false;
+        return;
+    }
+
+    this.startProgressTracking();
+    this.updateUI();
+}
+
+startProgressTracking() {
+    if (this.progressInterval) clearInterval(this.progressInterval);
+
+    this.progressInterval = setInterval(() => {
+        if (!this.isPlaying) return;
+
+        if (!this.audioManager.isPaused()) {
             const currentTime = this.audioManager.getCurrentTime();
             const duration = this.audioManager.getDuration();
             const progress = (currentTime / duration) * 100;
-            
+
             const progressBar = document.getElementById(`progress-${this.currentStage}`);
             if (progressBar) {
                 progressBar.style.width = `${Math.min(progress, 100)}%`;
                 progressBar.setAttribute('aria-valuenow', Math.min(progress, 100));
             }
-            
+
             const timeDisplay = document.getElementById(`stage-${this.currentStage}-time`);
             if (timeDisplay) {
                 const currentMin = Math.floor(currentTime / 60);
                 const currentSec = Math.floor(currentTime % 60);
                 const totalMin = Math.floor(duration / 60);
                 const totalSec = Math.floor(duration % 60);
-                
-                timeDisplay.textContent = 
+
+                timeDisplay.textContent =
                     `${currentMin}:${currentSec.toString().padStart(2, '0')} / ` +
                     `${totalMin}:${totalSec.toString().padStart(2, '0')}`;
             }
-            
+
             if (currentTime >= duration) {
                 this.isPlaying = false;
-                this.updateUI();
                 clearInterval(this.progressInterval);
+                this.updateUI();
             }
-        }, 100);
-    }
+        }
+    }, 100);
+}
 
     async skipStage() {
         try {
