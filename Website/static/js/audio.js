@@ -86,9 +86,6 @@ class AudioManager {
                 await this.audioContext.resume();
             }
 
-            // Stop any current playback
-            this.stop();
-
             // Load required stems for current stage
             const stemsToPlay = this.stems.slice(0, currentStage + 1);
             
@@ -154,23 +151,83 @@ class AudioManager {
         this.sources.forEach(source => {
             try {
                 source.stop();
-            } catch (e) {
-                // Source might already be stopped
-            }
+            } catch (e) {}
         });
 
         this.pauseTime = this.getCurrentTime();
         this.isPaused = true;
         this.isPlaying = false;
+
+        if (this.progressInterval) {
+            clearInterval(this.progressInterval);
+            this.progressInterval = null;
+        }
     }
 
+    async unpause() {
+        if (!this.isPaused) return;
+
+        try {
+            if (this.audioContext.state === 'suspended') {
+                await this.audioContext.resume();
+            }
+
+            const stemsToPlay = this.stems.slice(0, this.currentStage + 1);
+
+            // Create new source nodes from the loaded buffers
+            this.sources = [];
+            this.gainNodes = [];
+
+            for (const stem of stemsToPlay) {
+                const buffer = this.loadedBuffers[stem.name];
+                if (!buffer) continue;
+
+                const source = this.audioContext.createBufferSource();
+                source.buffer = buffer;
+
+                const gainNode = this.audioContext.createGain();
+                gainNode.gain.setValueAtTime(0.7, this.audioContext.currentTime);
+
+                source.connect(gainNode);
+                gainNode.connect(this.masterGain);
+
+                this.sources.push(source);
+                this.gainNodes.push(gainNode);
+            }
+
+            const when = this.audioContext.currentTime;
+            const startTime = this.pauseTime;
+
+            this.sources.forEach(source => {
+                source.start(when, startTime, this.duration - startTime);
+            });
+
+            this.startTime = this.audioContext.currentTime - startTime;
+            this.isPlaying = true;
+            this.isPaused = false;
+
+            // Resume progress tracking
+            if (this.progressInterval) clearInterval(this.progressInterval);
+            this.progressInterval = null;
+            window.kneidelGameInstance?.startProgressTracking?.();
+
+            // Auto-stop
+            setTimeout(() => {
+                if (this.isPlaying && !this.isPaused) {
+                    this.stop();
+                }
+            }, (this.duration - startTime) * 1000);
+
+        } catch (error) {
+            console.error('Unpause failed:', error);
+        }
+    }
+    
     stop() {
         this.sources.forEach(source => {
             try {
                 source.stop();
-            } catch (e) {
-                // Source might already be stopped
-            }
+            } catch (e) {}
         });
 
         this.sources = [];
@@ -179,7 +236,13 @@ class AudioManager {
         this.isPaused = false;
         this.startTime = 0;
         this.pauseTime = 0;
+
+        if (this.progressInterval) {
+            clearInterval(this.progressInterval);
+            this.progressInterval = null;
+        }
     }
+
 
     rewind(seconds) {
         if (!this.isPlaying && !this.isPaused) return;
@@ -221,6 +284,16 @@ class AudioManager {
     getDuration() {
         return this.duration;
     }
+
+    async unpause() {
+        if (!this.isPaused) return;
+        this.isPaused = false;
+        this.isPlaying = true;
+
+        // Resume playback from pauseTime
+        await this.play(this.currentStage || 0);
+    }
+
 
     getCurrentStage() {
         // This should be set by the game logic

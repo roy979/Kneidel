@@ -23,14 +23,17 @@ API_BASE = f"https://api.github.com/repos/{GITHUB_USER}/{GITHUB_REPO}/contents/P
 
 # Initialize credentials
 try:
-    # Try to get tokens from external API first
-    r = requests.get("https://kneidel.onrender.com/api/tokens")
-    r.raise_for_status()
-    data = r.json()
+    # # Try to get tokens from external API first
+    # r = requests.get("https://kneidel.onrender.com/api/tokens")
+    # r.raise_for_status()
+    # data = r.json()
 
-    GITHUB_TOKEN = data["github"]
-    SPOTIFY_ID = data["spotid"]
-    SPOTIFY_SECRET = data["spotsec"]
+    # GITHUB_TOKEN = data["github"]
+    # SPOTIFY_ID = data["spotid"]
+    # SPOTIFY_SECRET = data["spotsec"]
+    GITHUB_TOKEN = os.environ.get("GITHUB_TOKEN")
+    SPOTIFY_ID = os.environ.get("SPOTIFY_ID")
+    SPOTIFY_SECRET = os.environ.get("SPOTIFY_SECRET")
 except Exception as e:
     logging.warning(f"Failed to get credentials from external API: {e}")
     # Fallback to environment variables
@@ -377,6 +380,10 @@ def get_game_status(session_id):
 
 
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 10000)) 
-    print(f"Running on port {port}")
-    app.run(host='0.0.0.0', port=port)
+    app.run(host='0.0.0.0', port=5000, debug=True)
+
+
+# if __name__ == "__main__":
+#     port = int(os.environ.get("PORT", 10000)) 
+#     print(f"Running on port {port}")
+#     app.run(host='0.0.0.0', port=port)

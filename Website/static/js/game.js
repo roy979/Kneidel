@@ -147,6 +147,7 @@ class KneidelGame {
             if (data.success) {
                 this.currentSong = data;
                 this.currentStage = data.current_stage;
+                this.audioManager.currentStage = this.currentStage;
                 this.createProgressBars(data.total_stages);
                 await this.audioManager.loadStems(data.stems);
                 this.updateUI();
@@ -217,18 +218,23 @@ class KneidelGame {
 async togglePlayPause() {
     if (!this.currentSong) return;
 
-    // Toggle pause/unpause
     if (this.isPlaying) {
-        if (this.audioManager.isPaused()) {
-            this.audioManager.unpause();
+        if (this.audioManager.isPaused) {
+            await this.audioManager.unpause();
+            this.audioManager.isPaused = False;
         } else {
             this.audioManager.pause();
+            this.audioManager.isPaused = True;
+            if (this.progressInterval) clearInterval(this.progressInterval);
         }
         this.updateUI();
         return;
     }
+    else{
+        
+    }
 
-    // Start new playback
+    // Start new playback if not playing
     this.isPlaying = true;
     this.currentProgress = 0;
 
@@ -244,21 +250,36 @@ async togglePlayPause() {
     this.updateUI();
 }
 
+
 startProgressTracking() {
     if (this.progressInterval) clearInterval(this.progressInterval);
 
     this.progressInterval = setInterval(() => {
-        if (!this.isPlaying) return;
+        if (!this.isPlaying) {
+            console.log('Not playing, skipping progress update');
+            return;
+        }
 
         if (!this.audioManager.isPaused()) {
             const currentTime = this.audioManager.getCurrentTime();
             const duration = this.audioManager.getDuration();
+
+            // Debug logs
+            console.log('Progress tracking:', { currentTime, duration, isPaused: this.audioManager.isPaused() });
+
+            if (!duration || duration <= 0) {
+                console.warn('Invalid duration:', duration);
+                return;
+            }
+
             const progress = (currentTime / duration) * 100;
 
             const progressBar = document.getElementById(`progress-${this.currentStage}`);
             if (progressBar) {
                 progressBar.style.width = `${Math.min(progress, 100)}%`;
                 progressBar.setAttribute('aria-valuenow', Math.min(progress, 100));
+            } else {
+                console.warn('Progress bar element not found for currentStage:', this.currentStage);
             }
 
             const timeDisplay = document.getElementById(`stage-${this.currentStage}-time`);
@@ -274,10 +295,13 @@ startProgressTracking() {
             }
 
             if (currentTime >= duration) {
+                console.log('Playback ended, clearing interval');
                 this.isPlaying = false;
                 clearInterval(this.progressInterval);
                 this.updateUI();
             }
+        } else {
+            console.log('Audio is paused, not updating progress');
         }
     }, 100);
 }
@@ -297,6 +321,7 @@ startProgressTracking() {
                     this.showAnswer(data.answer);
                 } else {
                     this.currentStage = data.new_stage;
+                    this.audioManager.currentStage = this.currentStage;
                     this.audioManager.stop();
                     this.isPlaying = false;
                     this.updateUI();
