@@ -1,7 +1,12 @@
 from flask import Flask, jsonify
+from flask_cors import CORS
 import os
 
 app = Flask(__name__)
+
+# Enable CORS only for localhost:5500 (or your frontend origin)
+CORS(app, resources={r"/api/*": {"origins": "http://127.0.0.1:5500"}})
+
 GITHUB_TOKEN    = os.environ.get('GITHUB_TOKEN')
 SPOTIFY_ID      = os.environ.get('SPOTIFY_ID')
 SPOTIFY_SECRET  = os.environ.get('SPOTIFY_SECRET')

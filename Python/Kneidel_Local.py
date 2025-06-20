@@ -43,7 +43,7 @@ class Kneidel:
         btn_frame = tk.Frame(self.root, bg="white")
         btn_frame.pack(pady=20)
 
-        self.play_button = ttk.Button(btn_frame, text="\u23EF Play\Pause", command=self.Button_action_play_pasue)
+        self.play_button = ttk.Button(btn_frame, text="\u23EF Play/Pause", command=self.Button_action_play_pasue)
         self.play_button.grid(row=0, column=0, padx=10)
 
         self.skip_button = ttk.Button(btn_frame, text="\u23ED Skip", command=self.Button_action_skip_stage)
