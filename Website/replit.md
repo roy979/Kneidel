@@ -76,6 +76,10 @@ The application follows a traditional Flask web architecture with the following 
 
 ## Changelog
 - June 20, 2025. Initial setup
+- June 20, 2025. Fixed audio playback issues: pause/resume functionality, progress bar tracking, and JavaScript errors
+- June 20, 2025. Successfully resolved all audio functionality issues - confirmed working by user
+- June 20, 2025. Enhanced game mechanics: automatic stage progression on wrong guesses, clickable stage bars for seeking
+- June 20, 2025. Fixed rewind functionality, improved stage bar seeking behavior, repositioned "Change Packages" button to navbar
 
 ## User Preferences
 

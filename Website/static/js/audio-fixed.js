@@ -269,18 +269,13 @@ class AudioManager {
 
         const currentTime = this.getCurrentTime();
         const newTime = Math.max(0, currentTime - seconds);
-        
-        console.log(`Rewinding from ${currentTime.toFixed(2)}s to ${newTime.toFixed(2)}s`);
+
+        this.pauseTime = newTime;
 
         if (this.isPlaying) {
-            // For playing audio, we need to restart from the new position
-            this.stop();
-            this.pauseTime = newTime;
-            this.isPaused = true;
+            // Restart playback from new position
+            this.pause();
             this.resume().catch(console.error);
-        } else if (this.isPaused) {
-            // For paused audio, just update the pause time
-            this.pauseTime = newTime;
         }
     }
 

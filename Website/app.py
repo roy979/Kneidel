@@ -23,23 +23,22 @@ API_BASE = f"https://api.github.com/repos/{GITHUB_USER}/{GITHUB_REPO}/contents/P
 
 # Initialize credentials
 try:
-    # # Try to get tokens from external API first
-    # r = requests.get("https://kneidel.onrender.com/api/tokens")
-    # r.raise_for_status()
-    # data = r.json()
+    # Try to get tokens from external API first with timeout
+    r = requests.get("https://kneidel.onrender.com/api/tokens", timeout=5)
+    r.raise_for_status()
+    data = r.json()
 
-    # GITHUB_TOKEN = data["github"]
-    # SPOTIFY_ID = data["spotid"]
-    # SPOTIFY_SECRET = data["spotsec"]
-    GITHUB_TOKEN = os.environ.get("GITHUB_TOKEN")
-    SPOTIFY_ID = os.environ.get("SPOTIFY_ID")
-    SPOTIFY_SECRET = os.environ.get("SPOTIFY_SECRET")
+    GITHUB_TOKEN = data["github"]
+    SPOTIFY_ID = data["spotid"]
+    SPOTIFY_SECRET = data["spotsec"]
+    logging.info("Successfully retrieved credentials from external API")
 except Exception as e:
     logging.warning(f"Failed to get credentials from external API: {e}")
     # Fallback to environment variables
     GITHUB_TOKEN = os.environ.get('GITHUB_TOKEN')
     SPOTIFY_ID = os.environ.get('SPOTIFY_ID')
     SPOTIFY_SECRET = os.environ.get('SPOTIFY_SECRET')
+    logging.info("Using environment variables for credentials")
 
 HEADERS = {"Authorization": f"token {GITHUB_TOKEN}"} if GITHUB_TOKEN else {}
 
@@ -257,11 +256,25 @@ def check_guess():
                 "total_score": session['score']
             })
         else:
-            return jsonify({
-                "success": True,
-                "correct": False,
-                "message": "Not quite right, keep trying!"
-            })
+            # Wrong guess - advance to next stage or reveal answer if on final stage
+            session['stage'] += 1
+            
+            # Check if we've reached the final stage (assuming max 6 stages)
+            if session['stage'] >= 6:
+                return jsonify({
+                    "success": True,
+                    "correct": False,
+                    "final_stage": True,
+                    "answer": current_song.split('/')[-1],
+                    "message": f"Wrong! The answer was: {current_song.split('/')[-1]}"
+                })
+            else:
+                return jsonify({
+                    "success": True,
+                    "correct": False,
+                    "new_stage": session['stage'],
+                    "message": "Not quite right! Moving to next stage..."
+                })
 
     except Exception as e:
         logging.error(f"Error checking guess: {e}")

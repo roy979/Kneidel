@@ -26,7 +26,6 @@ class KneidelGame {
         document.getElementById('play-pause-btn').addEventListener('click', () => this.togglePlayPause());
         document.getElementById('skip-stage-btn').addEventListener('click', () => this.skipStage());
         document.getElementById('rewind-btn').addEventListener('click', () => this.rewind());
-        document.getElementById('select-packages-btn').addEventListener('click', () => this.showPackageModal());
         
         // Guess functionality
         document.getElementById('guess-btn').addEventListener('click', () => this.submitGuess());
@@ -111,14 +110,6 @@ class KneidelGame {
         document.getElementById('loading-game').style.display = 'block';
 
         try {
-            // Stop any current audio playback and reset game state
-            if (this.audioManager) {
-                this.audioManager.stop();
-                this.isPlaying = false;
-            }
-            this.currentStage = 0;
-            this.currentSong = null;
-
             const response = await fetch('/api/start-game', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -146,9 +137,6 @@ class KneidelGame {
         document.getElementById('game-controls').style.display = 'block';
         document.getElementById('guess-section').style.display = 'block';
         document.getElementById('stage-bars').style.display = 'block';
-        
-        // Show the change packages button in the navbar
-        document.getElementById('select-packages-btn').style.display = 'block';
     }
 
     async loadCurrentSong() {
@@ -204,25 +192,14 @@ class KneidelGame {
         const counter = document.getElementById('song-counter');
         counter.textContent = `Stage ${this.currentStage + 1} of ${this.currentSong.total_stages}`;
         
-        // Update stage bars - highlight current stage and show locked/unlocked status
+        // Highlight current stage
         document.querySelectorAll('.progress-bar-container').forEach((container, index) => {
-            const progressBar = container.querySelector('.progress');
-            
-            // Remove all existing classes
-            container.classList.remove('current-stage', 'unlocked', 'locked');
-            progressBar.classList.remove('active', 'unlocked', 'locked');
-            
             if (index === this.currentStage) {
-                container.classList.add('current-stage', 'unlocked');
-                progressBar.classList.add('active', 'unlocked');
-            } else if (index < this.currentStage) {
-                // Previous stages are unlocked and clickable
-                container.classList.add('unlocked');
-                progressBar.classList.add('unlocked');
+                container.classList.add('current-stage');
+                container.querySelector('.progress-bar').classList.add('active');
             } else {
-                // Future stages are locked
-                container.classList.add('locked');
-                progressBar.classList.add('locked');
+                container.classList.remove('current-stage');
+                container.querySelector('.progress-bar').classList.remove('active');
             }
         });
         
@@ -335,24 +312,14 @@ class KneidelGame {
     }
 
     seekTo(event, stage) {
-        // Only allow seeking on current or previous stages (unlocked stages)
-        if (stage > this.currentStage) return;
+        if (stage !== this.currentStage) return;
         
         const progressBar = event.currentTarget;
         const rect = progressBar.getBoundingClientRect();
         const clickX = event.clientX - rect.left;
-        const percentage = Math.max(0, Math.min(1, clickX / rect.width));
+        const percentage = clickX / rect.width;
         
-        console.log(`Seeking to ${(percentage * 100).toFixed(1)}% on stage ${stage + 1}`);
-        
-        // If clicking on current stage, just seek within current playback
-        if (stage === this.currentStage) {
-            this.audioManager.seekTo(percentage);
-        } else if (stage < this.currentStage) {
-            // If clicking on a previous stage, DON'T change the current stage
-            // Just seek to that position in the timeline
-            this.audioManager.seekTo(percentage);
-        }
+        this.audioManager.seekTo(percentage);
     }
 
     async handleSearchInput() {
@@ -430,16 +397,6 @@ class KneidelGame {
             if (data.success) {
                 if (data.correct) {
                     this.showCorrectGuess(data.answer, data.points, data.total_score);
-                } else if (data.final_stage) {
-                    this.showAnswer(data.answer);
-                } else if (data.new_stage !== undefined) {
-                    // Wrong guess - advance to next stage
-                    this.currentStage = data.new_stage;
-                    this.audioManager.stop();
-                    this.isPlaying = false;
-                    this.showFeedback(data.message, 'warning');
-                    this.updateUI();
-                    this.clearGuessInput();
                 } else {
                     this.showFeedback(data.message, 'warning');
                 }
