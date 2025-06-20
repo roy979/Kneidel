@@ -279,13 +279,23 @@ def skip_stage():
             }), 404
 
         session = game_sessions[session_id]
-        session['stage'] += 1
-
-        # Get current song info
         current_song = session['songs'][session['current_index']]
 
-        # Check if we've reached the final stage
-        if session['stage'] >= 6:  # Assuming max 6 stages
+        # Fetch actual number of stems for the current song
+        api_url = f"https://api.github.com/repos/{GITHUB_USER}/{GITHUB_REPO}/contents/Packages/{current_song}"
+        r = requests.get(api_url, headers=HEADERS)
+        r.raise_for_status()
+
+        total_stages = len([
+            f for f in r.json()
+            if f['type'] == 'file' and f['name'].endswith('.flac') and '_Quiet' not in f['name']
+        ])
+
+        # Advance to the next stage
+        session['stage'] += 1
+
+        # Check if we've reached or exceeded the final stage
+        if session['stage'] >= total_stages:
             return jsonify({
                 "success": True,
                 "final_stage": True,
@@ -301,7 +311,6 @@ def skip_stage():
     except Exception as e:
         logging.error(f"Error skipping stage: {e}")
         return jsonify({"success": False, "error": str(e)}), 500
-
 
 @app.route('/api/next-song', methods=['POST'])
 def next_song():
@@ -368,5 +377,6 @@ def get_game_status(session_id):
 
 
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 80))
+    port = int(os.environ["PORT"])  # Do not default to 80!
+    print(f"Running on port {port}")
     app.run(host='0.0.0.0', port=port)
