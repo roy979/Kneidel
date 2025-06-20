@@ -217,8 +217,8 @@ class KneidelGame {
                 progressBar.classList.add('active', 'unlocked');
             } else if (index < this.currentStage) {
                 // Previous stages are unlocked and clickable
-                container.classList.add('unlocked');
-                progressBar.classList.add('unlocked');
+                container.classList.add('locked');
+                progressBar.classList.add('locked');
             } else {
                 // Future stages are locked
                 container.classList.add('locked');
@@ -309,10 +309,37 @@ class KneidelGame {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ session_id: this.sessionId })
             });
-            
+
             const data = await response.json();
-            
+
             if (data.success) {
+                // Lock and reset the current stage's UI
+                const currentContainer = document.querySelectorAll('.progress-bar-container')[this.currentStage];
+                const currentProgress = document.getElementById(`progress-${this.currentStage}`);
+                const progressElement = currentContainer?.querySelector('.progress');
+
+                if (currentContainer) {
+                    currentContainer.classList.remove('current-stage', 'unlocked');
+                    currentContainer.classList.add('locked');
+                }
+
+                if (progressElement) {
+                    progressElement.classList.remove('active', 'unlocked');
+                    progressElement.classList.add('locked');
+                    progressElement.style.pointerEvents = 'none'; // force-disable clicks
+                }
+
+                if (currentProgress) {
+                    currentProgress.style.width = '0%';
+                    currentProgress.setAttribute('aria-valuenow', '0');
+                }
+
+                const timeDisplay = document.getElementById(`stage-${this.currentStage}-time`);
+                if (timeDisplay) {
+                    timeDisplay.textContent = '0:00 / 0:30';
+                }
+
+                // Handle next stage or end
                 if (data.final_stage) {
                     this.showAnswer(data.answer);
                 } else {
@@ -330,29 +357,45 @@ class KneidelGame {
         }
     }
 
+
+
     rewind() {
         this.audioManager.rewind(5); // Rewind 5 seconds
     }
 
     seekTo(event, stage) {
-        // Only allow seeking on current or previous stages (unlocked stages)
         if (stage > this.currentStage) return;
-        
+
         const progressBar = event.currentTarget;
         const rect = progressBar.getBoundingClientRect();
         const clickX = event.clientX - rect.left;
         const percentage = Math.max(0, Math.min(1, clickX / rect.width));
-        
+
         console.log(`Seeking to ${(percentage * 100).toFixed(1)}% on stage ${stage + 1}`);
-        
-        // If clicking on current stage, just seek within current playback
-        if (stage === this.currentStage) {
-            this.audioManager.seekTo(percentage);
-        } else if (stage < this.currentStage) {
-            // If clicking on a previous stage, DON'T change the current stage
-            // Just seek to that position in the timeline
-            this.audioManager.seekTo(percentage);
+
+        const wasPlaying = this.isPlaying;
+
+        // Pause the current playback so we can seek cleanly
+        this.audioManager.pause();
+        this.isPlaying = false;
+
+        // Seek to the new percentage
+        this.audioManager.seekTo(percentage);
+
+        // Update the progress bar immediately
+        const stageBar = document.getElementById(`progress-${stage}`);
+        if (stageBar) {
+            stageBar.style.width = `${percentage * 100}%`;
         }
+
+        // Resume playback if it was playing
+        if (wasPlaying) {
+            this.audioManager.setCurrentStage(stage);  // Make sure stage is set
+            this.audioManager.resume();               // Resume from new position
+            this.isPlaying = true;
+        }
+
+        this.updateUI();
     }
 
     async handleSearchInput() {
@@ -409,12 +452,12 @@ class KneidelGame {
 
     async submitGuess() {
         const guess = document.getElementById('guess-input').value.trim();
-        
+
         if (!guess) {
             this.showFeedback('Please enter a guess!', 'danger');
             return;
         }
-        
+
         try {
             const response = await fetch('/api/guess', {
                 method: 'POST',
@@ -424,21 +467,45 @@ class KneidelGame {
                     guess: guess
                 })
             });
-            
+
             const data = await response.json();
-            
+
             if (data.success) {
                 if (data.correct) {
                     this.showCorrectGuess(data.answer, data.points, data.total_score);
                 } else if (data.final_stage) {
+                    // Show final answer but DO NOT stop or pause audio
                     this.showAnswer(data.answer);
+                    // Keep playing, so no this.audioManager.stop() or this.isPlaying = false here
                 } else if (data.new_stage !== undefined) {
                     // Wrong guess - advance to next stage
+                    
+                    // Reset current stage progress bar and time display
+                    const oldStage = this.currentStage;
+                    const currentProgress = document.getElementById(`progress-${oldStage}`);
+                    if (currentProgress) {
+                        currentProgress.style.width = '0%';
+                        currentProgress.setAttribute('aria-valuenow', '0');
+                    }
+                    const timeDisplay = document.getElementById(`stage-${oldStage}-time`);
+                    if (timeDisplay) {
+                        timeDisplay.textContent = '0:00 / 0:30';
+                    }
+                    
+                    // Update current stage to new stage
                     this.currentStage = data.new_stage;
+                    
+                    // Stop audio and reset playing state
                     this.audioManager.stop();
                     this.isPlaying = false;
+                    
+                    // Show warning feedback message
                     this.showFeedback(data.message, 'warning');
+                    
+                    // Update UI which will lock all previous stages (those < currentStage)
                     this.updateUI();
+                    
+                    // Clear guess input field
                     this.clearGuessInput();
                 } else {
                     this.showFeedback(data.message, 'warning');
@@ -451,33 +518,34 @@ class KneidelGame {
         }
     }
 
+
     showCorrectGuess(answer, points, totalScore) {
         this.showFeedback(`Correct! "${answer}" - You earned ${points} points!`, 'success');
         document.getElementById('score-display').textContent = `Score: ${totalScore}`;
         document.getElementById('next-song-btn').style.display = 'inline-block';
-        this.audioManager.stop();
-        this.isPlaying = false;
         this.updateUI();
     }
 
     showAnswer(answer) {
         this.showFeedback(`The answer was: "${answer}"`, 'info');
         document.getElementById('next-song-btn').style.display = 'inline-block';
-        this.audioManager.stop();
-        this.isPlaying = false;
         this.updateUI();
     }
 
     async nextSong() {
         try {
+            // 🔇 Stop all audio before moving to the next song
+            this.audioManager.stop();
+            this.isPlaying = false;
+
             const response = await fetch('/api/next-song', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ session_id: this.sessionId })
             });
-            
+
             const data = await response.json();
-            
+
             if (data.success) {
                 if (data.game_finished) {
                     this.showGameOver(data.final_score, data.songs_guessed, data.total_songs);

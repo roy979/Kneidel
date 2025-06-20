@@ -218,7 +218,6 @@ def search_songs():
 
 @app.route('/api/guess', methods=['POST'])
 def check_guess():
-    """Check if the user's guess is correct"""
     try:
         data = request.json
         session_id = data.get('session_id', 'default')
@@ -237,9 +236,18 @@ def check_guess():
         # Check if guess matches (partial matching)
         is_correct = correct_answer in guess or guess in correct_answer or guess == 'vizen gay'
 
+        # Fetch total stages dynamically
+        api_url = f"https://api.github.com/repos/{GITHUB_USER}/{GITHUB_REPO}/contents/Packages/{current_song}"
+        r = requests.get(api_url, headers=HEADERS)
+        r.raise_for_status()
+        total_stages = len([
+            f for f in r.json()
+            if f['type'] == 'file' and f['name'].endswith('.flac') and '_Quiet' not in f['name']
+        ])
+
         if is_correct:
             # Calculate score based on current stage (earlier guess = higher score)
-            stage_bonus = max(0, 6 - session['stage'])
+            stage_bonus = max(0, total_stages - session['stage'])
             points = 100 + (stage_bonus * 20)
             session['score'] += points
             session['guessed_songs'].append({
@@ -256,11 +264,9 @@ def check_guess():
                 "total_score": session['score']
             })
         else:
-            # Wrong guess - advance to next stage or reveal answer if on final stage
             session['stage'] += 1
             
-            # Check if we've reached the final stage (assuming max 6 stages)
-            if session['stage'] >= 6:
+            if session['stage'] >= total_stages:
                 return jsonify({
                     "success": True,
                     "correct": False,
