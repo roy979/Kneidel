@@ -231,10 +231,18 @@ def check_guess():
 
         session = game_sessions[session_id]
         current_song = session['songs'][session['current_index']]
+        # Extract file name without path and lowercase
         correct_answer = current_song.split('/')[-1].lower()
 
-        # Check if guess matches (partial matching)
-        is_correct = correct_answer in guess or guess in correct_answer or guess == 'vizen gay'
+        # Extract base song names (before ' - ' or full if no ' - ')
+        def base_name(name):
+            return name.split(' - ')[0].strip()
+
+        guess_base = base_name(guess)
+        correct_base = base_name(correct_answer)
+
+        # Check if guess base matches correct base, or special override
+        is_correct = (guess_base == correct_base) or (guess == 'vizen gay')
 
         # Fetch total stages dynamically
         api_url = f"https://api.github.com/repos/{GITHUB_USER}/{GITHUB_REPO}/contents/Packages/{current_song}"
