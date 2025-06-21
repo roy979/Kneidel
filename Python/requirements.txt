@@ -1,3 +1,0 @@
-pygame>=2.0
-pydub>=0.25
-spotipy>=2.23
