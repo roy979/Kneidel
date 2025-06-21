@@ -13,3 +13,4 @@ Website/__pycache__/
 
 # pip cache
 .cache/
+.cache
