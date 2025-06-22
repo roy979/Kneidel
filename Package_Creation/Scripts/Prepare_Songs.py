@@ -6,8 +6,9 @@ import shutil
 import glob
 import subprocess
 import requests
-import logging
+import pyloudnorm as pyln
 from pydub import AudioSegment, effects
+from pydub.utils import get_array_type
 import numpy as np
 from scipy.signal import spectrogram
 from tkinter.filedialog import askdirectory
@@ -233,7 +234,7 @@ def process_song_file(file_path):
     return samples[:30 * audio.frame_rate], audio.frame_rate  # Trim to 30 seconds
 
 def sort_instruments(song_path):
-    print(f"\nProcessing: {song_path}")
+    print(f"\n🔍 Processing song folder: {song_path}")
     stem_scores = []
     vocals_file = None
 
@@ -243,40 +244,97 @@ def sort_instruments(song_path):
 
             if "vocals" in file.lower():
                 vocals_file = file
+                print(f"🎤 Found vocals file: {file} (will rename last)")
                 continue
 
             try:
-                samples, rate = process_song_file(full_path)
-                psd = compute_band_psd(samples, rate, band=PSD_BAND)
-                rms = effects.normalize(AudioSegment.from_file(full_path)).rms
-                combined_score = 0.7 * psd + 0.3 * rms
-                stem_scores.append((file, combined_score))
+                # Load audio
+                audio = AudioSegment.from_file(full_path)
+                sample_rate = audio.frame_rate
+                samples = np.array(audio.get_array_of_samples()).astype(np.float32) / (2**15)
+
+                # Convert stereo to mono
+                if audio.channels == 2:
+                    samples = samples.reshape((-1, 2)).mean(axis=1)
+                    print(f"🔄 Converting {file} to mono")
+
+                # Measure loudness before any modification
+                meter = pyln.Meter(sample_rate)
+                lufs = meter.integrated_loudness(samples)
+                print(f"📏 LUFS for {file}: {lufs:.2f}")
+
+                # Skip very quiet stems
+                if lufs < QUIET_THRESHOLD_LUFS:
+                    print(f"⚠️  Skipping normalization for {file}: LUFS={lufs:.2f} < threshold={QUIET_THRESHOLD_LUFS}")
+                    stem_scores.append((file, lufs))
+                    continue
+
+                # Normalize to target LUFS
+                print(f"🎚️ Normalizing {file} from {lufs:.2f} to {TARGET_LUFS} LUFS")
+                normalized_samples = pyln.normalize.loudness(samples, lufs, TARGET_LUFS)
+
+                # Scale to avoid clipping if needed
+                peak = np.max(np.abs(normalized_samples))
+                print(f"🔊 Max amplitude before scaling: {peak:.4f}")
+                if peak > 1.0:
+                    print(f"⚠️ Clipping detected after normalization. Scaling down by factor {peak:.2f}")
+                    normalized_samples = normalized_samples / peak
+                    peak_after = np.max(np.abs(normalized_samples))
+                    print(f"🔊 Max amplitude after scaling: {peak_after:.4f}")
+
+                # Convert back to int16 for saving
+                normalized_int16 = np.int16(np.clip(normalized_samples * 32767, -32768, 32767))
+
+                # Convert to AudioSegment
+                normalized_audio = AudioSegment(
+                    normalized_int16.tobytes(),
+                    frame_rate=sample_rate,
+                    sample_width=2,  # 16-bit audio
+                    channels=1
+                )
+
+                # Overwrite the file with normalized version
+                normalized_audio.export(full_path, format="flac")
+                print(f"💾 Normalized and saved: {file}")
+
+                stem_scores.append((file, TARGET_LUFS))
+
             except Exception as e:
-                print(f"Error processing {file}: {e}")
+                print(f"❌ Error processing {file}: {e}")
 
     if not stem_scores and not vocals_file:
         print("No stems found.")
         return
 
+    print(f"\n📊 Stem LUFS scores before sorting: {stem_scores}")
+    # Sort stems by LUFS (quietest → loudest)
     stem_scores.sort(key=lambda x: x[1])
-    max_score = max([score for _, score in stem_scores] or [1])
 
+    # Rename stems
     for i, (filename, score) in enumerate(stem_scores):
         old_path = os.path.join(song_path, filename)
-        if score < QUIET_THRESHOLD_RATIO * max_score:
+        if score < QUIET_THRESHOLD_LUFS:
             new_name = os.path.splitext(filename)[0] + "_Quiet.flac"
         else:
             new_name = f"{i + 1}.flac"
         new_path = os.path.join(song_path, new_name)
-        os.rename(old_path, new_path)
-        print(f"Renamed '{filename}' → '{new_name}'")
-        last_stem = i+2
+        if old_path != new_path:
+            os.rename(old_path, new_path)
+            print(f"🔁 Renamed '{filename}' → '{new_name}'")
 
+    # Rename vocals as last available slot
     if vocals_file:
+        existing_numbers = [
+            int(os.path.splitext(f)[0])
+            for f in os.listdir(song_path)
+            if f.lower().endswith(".flac") and os.path.splitext(f)[0].isdigit()
+        ]
+        last_index = max(existing_numbers, default=0)
         old_vocals_path = os.path.join(song_path, vocals_file)
-        new_vocals_path = os.path.join(song_path, f"{last_stem}.flac")
-        os.rename(old_vocals_path, new_vocals_path)
-        print(f"Renamed 'vocals.flac' → '{last_stem}.flac'")
+        new_vocals_path = os.path.join(song_path, f"{last_index + 1}.flac")
+        if old_vocals_path != new_vocals_path:
+            os.rename(old_vocals_path, new_vocals_path)
+            print(f"🔁 Renamed vocals '{vocals_file}' → '{last_index + 1}.flac'")
 
 def cleanup(package_folder):
     """
@@ -334,8 +392,8 @@ def cleanup(package_folder):
                     break
 
 # === Parameters ===
-PSD_BAND = (20, 16000)  # Hz
-QUIET_THRESHOLD_RATIO = 0.12  # Below 12% of max PSD → Quiet
+QUIET_THRESHOLD_LUFS = -35  # Adjust this as needed
+TARGET_LUFS = -14.0         # LUFS normalization target
 
 if __name__ == "__main__":
     package_folder = askdirectory(title="Select Unprocessed Songs Folder")
@@ -343,59 +401,59 @@ if __name__ == "__main__":
         print("No folder selected.")
     else:
         try:
-            # print(f"\n🔁 Removing [SPOTDOWNLOADER] Tag From Folder And Songs Name...", end="", flush=True)
-            # package_folder = rename(package_folder)
-            # print(" ✔")
+            print(f"\n🔁 Removing [SPOTDOWNLOADER] Tag From Folder And Songs Name...", end="", flush=True)
+            package_folder = rename(package_folder)
+            print(" ✔")
 
-            # song_paths = glob.glob(os.path.join(package_folder, "*.mp3"))
-            # total_songs = len(song_paths)
+            song_paths = glob.glob(os.path.join(package_folder, "*.mp3"))
+            total_songs = len(song_paths)
 
-            # print(f"\n🎼 Found {total_songs} song(s) to process.")
+            print(f"\n🎼 Found {total_songs} song(s) to process.")
 
-            # for idx, song_path in enumerate(song_paths, start=1):
-            #     if "htdemucs" in song_path or "mdx" in song_path:
-            #         continue
+            for idx, song_path in enumerate(song_paths, start=1):
+                if "htdemucs" in song_path or "mdx" in song_path:
+                    continue
 
-            #     song_name = os.path.splitext(os.path.basename(song_path))[0]
-            #     expected_output_dir = os.path.join(package_folder, "htdemucs_6s", song_name)
+                song_name = os.path.splitext(os.path.basename(song_path))[0]
+                expected_output_dir = os.path.join(package_folder, "htdemucs_6s", song_name)
 
-            #     if os.path.isdir(expected_output_dir):
-            #         print(f"\n⏩ Skipping already processed song: {song_name} [{idx}/{total_songs}]")
-            #         continue
+                if os.path.isdir(expected_output_dir):
+                    print(f"\n⏩ Skipping already processed song: {song_name} [{idx}/{total_songs}]")
+                    continue
                 
-            #     print(f"\n🔁 Processing {song_name} [{idx}/{total_songs}]")
+                print(f"\n🔁 Processing {song_name} [{idx}/{total_songs}]")
 
-            #     # Step 1: Detect chorus
-            #     print("   🎵 Detecting choruses...", end="", flush=True)
-            #     with suppress_output():
-            #         choruses = detect_choruses(song_path)
-            #     print(" ✔")
+                # Step 1: Detect chorus
+                print("   🎵 Detecting choruses...", end="", flush=True)
+                with suppress_output():
+                    choruses = detect_choruses(song_path)
+                print(" ✔")
 
-            #     # Step 2: Extract chorus
-            #     print("   🎯 Extracting chorus segment...", end="", flush=True)
-            #     extract_longest_chorus(song_path, choruses)
-            #     print(" ✔")
+                # Step 2: Extract chorus
+                print("   🎯 Extracting chorus segment...", end="", flush=True)
+                extract_longest_chorus(song_path, choruses)
+                print(" ✔")
 
-            #     # Step 3: Create and run batch file
-            #     print("   🛠️  Creating Demucs batch file...", end="", flush=True)
-            #     create_run_file(song_path)
-            #     print(" ✔")
+                # Step 3: Create and run batch file
+                print("   🛠️  Creating Demucs batch file...", end="", flush=True)
+                create_run_file(song_path)
+                print(" ✔")
 
-            #     print("   ⚙ Running separation...")
-            #     bat_path = os.path.join(os.getcwd(), "Seperate_Song.bat")
-            #     subprocess.run(["cmd.exe", "/c", bat_path], check=True)
+                print("   ⚙ Running separation...")
+                bat_path = os.path.join(os.getcwd(), "Seperate_Song.bat")
+                subprocess.run(["cmd.exe", "/c", bat_path], check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
-            #     # Step 4: Delete .bat
-            #     try:
-            #         os.remove(bat_path)
-            #         print("   🧹 Batch file deleted.")
-            #     except Exception as e:
-            #         print(f"   ⚠️ Failed to delete batch file: {e}")
+                # Step 4: Delete .bat
+                try:
+                    os.remove(bat_path)
+                    print("   🧹 Batch file deleted.")
+                except Exception as e:
+                    print(f"   ⚠️ Failed to delete batch file: {e}")
 
-            # # Step 5: Cleanup output
-            # print("\n📂 Cleaning up folder structure...")
-            # cleanup(package_folder)
-            # print("✔ Folder cleaned.\n")
+            # Step 5: Cleanup output
+            print("\n📂 Cleaning up folder structure...")
+            cleanup(package_folder)
+            print("✔ Folder cleaned.\n")
 
             # Step 6: Sort instruments + fetch metadata
             song_folders = [f for f in os.listdir(package_folder) if os.path.isdir(os.path.join(package_folder, f))]
