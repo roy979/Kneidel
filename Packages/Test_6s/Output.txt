@@ -1,0 +1,940 @@
+(base) C:\Users\RoyWaisbord\OneDrive - Technion\Kneidel\Package_Creation>Prepare_Songs.bat
+
+🔁 Removing [SPOTDOWNLOADER] Tag From Folder And Songs Name...Renamed file: [SPOTDOWNLOADER.COM] אחריות.mp3 → אחריות.mp3
+Renamed file: [SPOTDOWNLOADER.COM] אלף כבאים.mp3 → אלף כבאים.mp3
+Renamed file: [SPOTDOWNLOADER.COM] ב.מ.וו. שחורה.mp3 → ב.מ.וו. שחורה.mp3
+Renamed file: [SPOTDOWNLOADER.COM] בואי ונביא לך ת'פאנק.mp3 → בואי ונביא לך ת'פאנק.mp3
+Renamed file: [SPOTDOWNLOADER.COM] גג.mp3 → גג.mp3
+Renamed file: [SPOTDOWNLOADER.COM] חרבו דרבו.mp3 → חרבו דרבו.mp3
+Renamed file: [SPOTDOWNLOADER.COM] כאלו מילים.mp3 → כאלו מילים.mp3
+Renamed file: [SPOTDOWNLOADER.COM] כלבויניקית.mp3 → כלבויניקית.mp3
+Renamed file: [SPOTDOWNLOADER.COM] לגור איתו.mp3 → לגור איתו.mp3
+Renamed file: [SPOTDOWNLOADER.COM] נופל וקם.mp3 → נופל וקם.mp3
+Renamed file: [SPOTDOWNLOADER.COM] ערב של יום בהיר.mp3 → ערב של יום בהיר.mp3
+Renamed file: [SPOTDOWNLOADER.COM] שוב הדיסקו כאן.mp3 → שוב הדיסקו כאן.mp3
+Renamed file: [SPOTDOWNLOADER.COM] תותים.mp3 → תותים.mp3
+Renamed file: [SPOTDOWNLOADER.COM] תיק קטן.mp3 → תיק קטן.mp3
+ ✔
+
+🎼 Found 14 song(s) to process.
+Fetching Spotify Credentials From The Server... ✔
+
+🔁 Processing אחריות [1/14]
+   🎵 Detecting choruses... ✔
+   🎯 Extracting chorus segment... ✔
+   ⚙ Running separation for: אחריות.mp3
+   ✔ Separation completed.
+   🔁 Renamed output folder to: אחריות
+   📂 Moved: C:/Users/RoyWaisbord/OneDrive - Technion/Kneidel/Packages/Test_6s\htdemucs_6s\אחריות → C:/Users/RoyWaisbord/OneDrive - Technion/Kneidel/Packages/Test_6s\אחריות
+
+🎚️ Sorting stems for: אחריות
+
+🔍 Processing song folder: C:/Users/RoyWaisbord/OneDrive - Technion/Kneidel/Packages/Test_6s\אחריות
+🔄 Converting bass.flac to mono
+📏 LUFS for bass.flac: -30.03
+🎚️ Normalizing bass.flac from -30.03 to -14.0 LUFS
+🔊 Max amplitude before scaling: 0.7907
+💾 Normalized and saved: bass.flac
+🔄 Converting drums.flac to mono
+📏 LUFS for drums.flac: -27.41
+🎚️ Normalizing drums.flac from -27.41 to -14.0 LUFS
+C:\Users\RoyWaisbord\OneDrive - Technion\Kneidel\Package_Creation\Kneidel_venv\lib\site-packages\pyloudnorm\normalize.py:62: UserWarning: Possible clipped samples in output.
+  warnings.warn("Possible clipped samples in output.")
+🔊 Max amplitude before scaling: 1.9539
+⚠️ Clipping detected after normalization. Scaling down by factor 1.95
+🔊 Max amplitude after scaling: 1.0000
+💾 Normalized and saved: drums.flac
+🔄 Converting guitar.flac to mono
+📏 LUFS for guitar.flac: -24.26
+🎚️ Normalizing guitar.flac from -24.26 to -14.0 LUFS
+🔊 Max amplitude before scaling: 0.8517
+💾 Normalized and saved: guitar.flac
+🔄 Converting other.flac to mono
+📏 LUFS for other.flac: -inf
+⚠️  Skipping normalization for other.flac: LUFS=-inf < threshold=-35
+🔄 Converting piano.flac to mono
+📏 LUFS for piano.flac: -inf
+⚠️  Skipping normalization for piano.flac: LUFS=-inf < threshold=-35
+🔄 Converting vocals.flac to mono
+📏 LUFS for vocals.flac: -22.10
+🎚️ Normalizing vocals.flac from -22.10 to -14.0 LUFS
+🔊 Max amplitude before scaling: 0.9164
+💾 Normalized and saved: vocals.flac
+
+📊 Stem LUFS scores before sorting: [('bass.flac', -30.0348320289958), ('drums.flac', -27.40719310561731), ('guitar.flac', -24.256772938716455), ('other.flac', -inf), ('piano.flac', -inf), ('vocals.flac', -22.100382009986475)]
+
+📊 Stem LUFS scores after sorting: [('bass.flac', -14.000000291172984), ('drums.flac', -19.818011125497538), ('guitar.flac', -14.00000011580823), ('other.flac', -inf), ('piano.flac', -inf), ('vocals.flac', -13.999999804847532)]
+🔁 Renamed 'other.flac' → 'other_Quiet.flac'
+🔁 Renamed 'piano.flac' → 'piano_Quiet.flac'
+🔁 Renamed 'bass.flac' → '3.flac'
+🔁 Renamed 'drums.flac' → '4.flac'
+🔁 Renamed 'guitar.flac' → '5.flac'
+🔁 Renamed vocals 'vocals.flac' → '6.flac'
+🔍 Fetching metadata for: אחריות
+Metadata saved to: C:/Users/RoyWaisbord/OneDrive - Technion/Kneidel/Packages/Test_6s\אחריות\אחריות - Yoni Bloch.json
+
+🔁 Processing אלף כבאים [2/14]
+   🎵 Detecting choruses... ✔
+   🎯 Extracting chorus segment... ✔
+   ⚙ Running separation for: אלף כבאים.mp3
+   ✔ Separation completed.
+   🔁 Renamed output folder to: אלף כבאים
+   📂 Moved: C:/Users/RoyWaisbord/OneDrive - Technion/Kneidel/Packages/Test_6s\htdemucs_6s\אלף כבאים → C:/Users/RoyWaisbord/OneDrive - Technion/Kneidel/Packages/Test_6s\אלף כבאים
+
+🎚️ Sorting stems for: אלף כבאים
+
+🔍 Processing song folder: C:/Users/RoyWaisbord/OneDrive - Technion/Kneidel/Packages/Test_6s\אלף כבאים
+🔄 Converting bass.flac to mono
+📏 LUFS for bass.flac: -26.87
+🎚️ Normalizing bass.flac from -26.87 to -14.0 LUFS
+C:\Users\RoyWaisbord\OneDrive - Technion\Kneidel\Package_Creation\Kneidel_venv\lib\site-packages\pyloudnorm\normalize.py:62: UserWarning: Possible clipped samples in output.
+  warnings.warn("Possible clipped samples in output.")
+🔊 Max amplitude before scaling: 1.4575
+⚠️ Clipping detected after normalization. Scaling down by factor 1.46
+🔊 Max amplitude after scaling: 1.0000
+💾 Normalized and saved: bass.flac
+🔄 Converting drums.flac to mono
+📏 LUFS for drums.flac: -20.51
+🎚️ Normalizing drums.flac from -20.51 to -14.0 LUFS
+C:\Users\RoyWaisbord\OneDrive - Technion\Kneidel\Package_Creation\Kneidel_venv\lib\site-packages\pyloudnorm\normalize.py:62: UserWarning: Possible clipped samples in output.
+  warnings.warn("Possible clipped samples in output.")
+🔊 Max amplitude before scaling: 1.7992
+⚠️ Clipping detected after normalization. Scaling down by factor 1.80
+🔊 Max amplitude after scaling: 1.0000
+💾 Normalized and saved: drums.flac
+🔄 Converting guitar.flac to mono
+📏 LUFS for guitar.flac: -22.31
+🎚️ Normalizing guitar.flac from -22.31 to -14.0 LUFS
+C:\Users\RoyWaisbord\OneDrive - Technion\Kneidel\Package_Creation\Kneidel_venv\lib\site-packages\pyloudnorm\normalize.py:62: UserWarning: Possible clipped samples in output.
+  warnings.warn("Possible clipped samples in output.")
+🔊 Max amplitude before scaling: 1.4063
+⚠️ Clipping detected after normalization. Scaling down by factor 1.41
+🔊 Max amplitude after scaling: 1.0000
+💾 Normalized and saved: guitar.flac
+🔄 Converting other.flac to mono
+📏 LUFS for other.flac: -42.69
+⚠️  Skipping normalization for other.flac: LUFS=-42.69 < threshold=-35
+🔄 Converting piano.flac to mono
+📏 LUFS for piano.flac: -inf
+⚠️  Skipping normalization for piano.flac: LUFS=-inf < threshold=-35
+🔄 Converting vocals.flac to mono
+📏 LUFS for vocals.flac: -16.46
+🎚️ Normalizing vocals.flac from -16.46 to -14.0 LUFS
+C:\Users\RoyWaisbord\OneDrive - Technion\Kneidel\Package_Creation\Kneidel_venv\lib\site-packages\pyloudnorm\normalize.py:62: UserWarning: Possible clipped samples in output.
+  warnings.warn("Possible clipped samples in output.")
+🔊 Max amplitude before scaling: 1.1374
+⚠️ Clipping detected after normalization. Scaling down by factor 1.14
+🔊 Max amplitude after scaling: 1.0000
+💾 Normalized and saved: vocals.flac
+
+📊 Stem LUFS scores before sorting: [('bass.flac', -26.866357533391504), ('drums.flac', -20.508775918354605), ('guitar.flac', -22.306865391400358), ('other.flac', -42.687071011376105), ('piano.flac', -inf), ('vocals.flac', -16.45610058326113)]
+
+📊 Stem LUFS scores after sorting: [('bass.flac', -17.271955344616057), ('drums.flac', -19.101425800534475), ('guitar.flac', -16.961256710796608), ('other.flac', -42.687071011376105), ('piano.flac', -inf), ('vocals.flac', -15.118291121223436)]
+🔁 Renamed 'piano.flac' → 'piano_Quiet.flac'
+🔁 Renamed 'other.flac' → 'other_Quiet.flac'
+🔁 Renamed 'bass.flac' → '3.flac'
+🔁 Renamed 'guitar.flac' → '4.flac'
+🔁 Renamed 'drums.flac' → '5.flac'
+🔁 Renamed vocals 'vocals.flac' → '6.flac'
+🔍 Fetching metadata for: אלף כבאים
+Metadata saved to: C:/Users/RoyWaisbord/OneDrive - Technion/Kneidel/Packages/Test_6s\אלף כבאים\אלף כבאים - Doda.json
+
+🔁 Processing ב.מ.וו. שחורה [3/14]
+   🎵 Detecting choruses... ✔
+   🎯 Extracting chorus segment... ✔
+   ⚙ Running separation for: ב.מ.וו. שחורה.mp3
+   ✔ Separation completed.
+   🔁 Renamed output folder to: ב.מ.וו. שחורה
+   📂 Moved: C:/Users/RoyWaisbord/OneDrive - Technion/Kneidel/Packages/Test_6s\htdemucs_6s\ב.מ.וו. שחורה → C:/Users/RoyWaisbord/OneDrive - Technion/Kneidel/Packages/Test_6s\ב.מ.וו. שחורה
+
+🎚️ Sorting stems for: ב.מ.וו. שחורה
+
+🔍 Processing song folder: C:/Users/RoyWaisbord/OneDrive - Technion/Kneidel/Packages/Test_6s\ב.מ.וו. שחורה
+🔄 Converting bass.flac to mono
+📏 LUFS for bass.flac: -33.20
+🎚️ Normalizing bass.flac from -33.20 to -14.0 LUFS
+C:\Users\RoyWaisbord\OneDrive - Technion\Kneidel\Package_Creation\Kneidel_venv\lib\site-packages\pyloudnorm\normalize.py:62: UserWarning: Possible clipped samples in output.
+  warnings.warn("Possible clipped samples in output.")
+🔊 Max amplitude before scaling: 1.0110
+⚠️ Clipping detected after normalization. Scaling down by factor 1.01
+🔊 Max amplitude after scaling: 1.0000
+💾 Normalized and saved: bass.flac
+🔄 Converting drums.flac to mono
+📏 LUFS for drums.flac: -28.08
+🎚️ Normalizing drums.flac from -28.08 to -14.0 LUFS
+C:\Users\RoyWaisbord\OneDrive - Technion\Kneidel\Package_Creation\Kneidel_venv\lib\site-packages\pyloudnorm\normalize.py:62: UserWarning: Possible clipped samples in output.
+  warnings.warn("Possible clipped samples in output.")
+🔊 Max amplitude before scaling: 1.7289
+⚠️ Clipping detected after normalization. Scaling down by factor 1.73
+🔊 Max amplitude after scaling: 1.0000
+💾 Normalized and saved: drums.flac
+🔄 Converting guitar.flac to mono
+📏 LUFS for guitar.flac: -35.05
+⚠️  Skipping normalization for guitar.flac: LUFS=-35.05 < threshold=-35
+🔄 Converting other.flac to mono
+📏 LUFS for other.flac: -36.35
+⚠️  Skipping normalization for other.flac: LUFS=-36.35 < threshold=-35
+🔄 Converting piano.flac to mono
+📏 LUFS for piano.flac: -38.36
+⚠️  Skipping normalization for piano.flac: LUFS=-38.36 < threshold=-35
+🔄 Converting vocals.flac to mono
+📏 LUFS for vocals.flac: -24.13
+🎚️ Normalizing vocals.flac from -24.13 to -14.0 LUFS
+C:\Users\RoyWaisbord\OneDrive - Technion\Kneidel\Package_Creation\Kneidel_venv\lib\site-packages\pyloudnorm\normalize.py:62: UserWarning: Possible clipped samples in output.
+  warnings.warn("Possible clipped samples in output.")
+🔊 Max amplitude before scaling: 1.0043
+⚠️ Clipping detected after normalization. Scaling down by factor 1.00
+🔊 Max amplitude after scaling: 1.0000
+💾 Normalized and saved: vocals.flac
+
+📊 Stem LUFS scores before sorting: [('bass.flac', -33.197424210695075), ('drums.flac', -28.08014117075131), ('guitar.flac', -35.053101708323176), ('other.flac', -36.34606235105422), ('piano.flac', -38.357298282486056), ('vocals.flac', -24.126314097288063)]
+
+📊 Stem LUFS scores after sorting: [('bass.flac', -14.094928427976713), ('drums.flac', -18.755503012907035), ('guitar.flac', -35.053101708323176), ('other.flac', -36.34606235105422), ('piano.flac', -38.357298282486056), ('vocals.flac', -14.037298980466852)]
+🔁 Renamed 'piano.flac' → 'piano_Quiet.flac'
+🔁 Renamed 'other.flac' → 'other_Quiet.flac'
+🔁 Renamed 'guitar.flac' → 'guitar_Quiet.flac'
+🔁 Renamed 'bass.flac' → '4.flac'
+🔁 Renamed 'drums.flac' → '5.flac'
+🔁 Renamed vocals 'vocals.flac' → '6.flac'
+🔍 Fetching metadata for: ב.מ.וו. שחורה
+Metadata saved to: C:/Users/RoyWaisbord/OneDrive - Technion/Kneidel/Packages/Test_6s\ב.מ.וו. שחורה\ב.מ.וו. שחורה - Ethnix.json
+
+🔁 Processing בואי ונביא לך ת'פאנק [4/14]
+   🎵 Detecting choruses... ✔
+   🎯 Extracting chorus segment... ✔
+   ⚙ Running separation for: בואי ונביא לך ת'פאנק.mp3
+   ✔ Separation completed.
+   🔁 Renamed output folder to: בואי ונביא לך ת'פאנק
+   📂 Moved: C:/Users/RoyWaisbord/OneDrive - Technion/Kneidel/Packages/Test_6s\htdemucs_6s\בואי ונביא לך ת'פאנק → C:/Users/RoyWaisbord/OneDrive - Technion/Kneidel/Packages/Test_6s\בואי ונביא לך ת'פאנק
+
+🎚️ Sorting stems for: בואי ונביא לך ת'פאנק
+
+🔍 Processing song folder: C:/Users/RoyWaisbord/OneDrive - Technion/Kneidel/Packages/Test_6s\בואי ונביא לך ת'פאנק
+🔄 Converting bass.flac to mono
+📏 LUFS for bass.flac: -22.97
+🎚️ Normalizing bass.flac from -22.97 to -14.0 LUFS
+C:\Users\RoyWaisbord\OneDrive - Technion\Kneidel\Package_Creation\Kneidel_venv\lib\site-packages\pyloudnorm\normalize.py:62: UserWarning: Possible clipped samples in output.
+  warnings.warn("Possible clipped samples in output.")
+🔊 Max amplitude before scaling: 1.0978
+⚠️ Clipping detected after normalization. Scaling down by factor 1.10
+🔊 Max amplitude after scaling: 1.0000
+💾 Normalized and saved: bass.flac
+🔄 Converting drums.flac to mono
+📏 LUFS for drums.flac: -19.85
+🎚️ Normalizing drums.flac from -19.85 to -14.0 LUFS
+C:\Users\RoyWaisbord\OneDrive - Technion\Kneidel\Package_Creation\Kneidel_venv\lib\site-packages\pyloudnorm\normalize.py:62: UserWarning: Possible clipped samples in output.
+  warnings.warn("Possible clipped samples in output.")
+🔊 Max amplitude before scaling: 1.8856
+⚠️ Clipping detected after normalization. Scaling down by factor 1.89
+🔊 Max amplitude after scaling: 1.0000
+💾 Normalized and saved: drums.flac
+🔄 Converting guitar.flac to mono
+📏 LUFS for guitar.flac: -23.81
+🎚️ Normalizing guitar.flac from -23.81 to -14.0 LUFS
+C:\Users\RoyWaisbord\OneDrive - Technion\Kneidel\Package_Creation\Kneidel_venv\lib\site-packages\pyloudnorm\normalize.py:62: UserWarning: Possible clipped samples in output.
+  warnings.warn("Possible clipped samples in output.")
+🔊 Max amplitude before scaling: 1.0235
+⚠️ Clipping detected after normalization. Scaling down by factor 1.02
+🔊 Max amplitude after scaling: 1.0000
+💾 Normalized and saved: guitar.flac
+🔄 Converting other.flac to mono
+📏 LUFS for other.flac: -32.08
+🎚️ Normalizing other.flac from -32.08 to -14.0 LUFS
+C:\Users\RoyWaisbord\OneDrive - Technion\Kneidel\Package_Creation\Kneidel_venv\lib\site-packages\pyloudnorm\normalize.py:62: UserWarning: Possible clipped samples in output.
+  warnings.warn("Possible clipped samples in output.")
+🔊 Max amplitude before scaling: 2.0112
+⚠️ Clipping detected after normalization. Scaling down by factor 2.01
+🔊 Max amplitude after scaling: 1.0000
+💾 Normalized and saved: other.flac
+🔄 Converting piano.flac to mono
+📏 LUFS for piano.flac: -inf
+⚠️  Skipping normalization for piano.flac: LUFS=-inf < threshold=-35
+🔄 Converting vocals.flac to mono
+📏 LUFS for vocals.flac: -16.54
+🎚️ Normalizing vocals.flac from -16.54 to -14.0 LUFS
+🔊 Max amplitude before scaling: 0.9963
+💾 Normalized and saved: vocals.flac
+
+📊 Stem LUFS scores before sorting: [('bass.flac', -22.967247395288794), ('drums.flac', -19.85032922846796), ('guitar.flac', -23.81436648938985), ('other.flac', -32.08179556833586), ('piano.flac', -inf), ('vocals.flac', -16.543322995545665)]
+
+📊 Stem LUFS scores after sorting: [('bass.flac', -14.810248443217551), ('drums.flac', -19.508920190764012), ('guitar.flac', -14.20194571880125), ('other.flac', -20.153017030858333), ('piano.flac', -inf), ('vocals.flac', -13.999999850064512)]
+🔁 Renamed 'piano.flac' → 'piano_Quiet.flac'
+🔁 Renamed 'other.flac' → '2.flac'
+🔁 Renamed 'guitar.flac' → '3.flac'
+🔁 Renamed 'bass.flac' → '4.flac'
+🔁 Renamed 'drums.flac' → '5.flac'
+🔁 Renamed vocals 'vocals.flac' → '6.flac'
+🔍 Fetching metadata for: בואי ונביא לך ת'פאנק
+Metadata saved to: C:/Users/RoyWaisbord/OneDrive - Technion/Kneidel/Packages/Test_6s\בואי ונביא לך ת'פאנק\בואי ונביא לך ת'פאנק - Mercedes Band.json
+
+🔁 Processing גג [5/14]
+   🎵 Detecting choruses...WARNING:tensorflow:5 out of the last 5 calls to <function Model.make_predict_function.<locals>.predict_function at 0x000001CB079628C0> triggered tf.function retracing. Tracing is expensive and the excessive number of tracings could be due to (1) creating @tf.function repeatedly in a loop, (2) passing tensors with different shapes, (3) passing Python objects instead of tensors. For (1), please define your @tf.function outside of the loop. For (2), @tf.function has reduce_retracing=True option that can avoid unnecessary retracing. For (3), please refer to https://www.tensorflow.org/guide/function#controlling_retracing and https://www.tensorflow.org/api_docs/python/tf/function for  more details.
+ ✔
+   🎯 Extracting chorus segment... ✔
+   ⚙ Running separation for: גג.mp3
+   ✔ Separation completed.
+   🔁 Renamed output folder to: גג
+   📂 Moved: C:/Users/RoyWaisbord/OneDrive - Technion/Kneidel/Packages/Test_6s\htdemucs_6s\גג → C:/Users/RoyWaisbord/OneDrive - Technion/Kneidel/Packages/Test_6s\גג
+
+🎚️ Sorting stems for: גג
+
+🔍 Processing song folder: C:/Users/RoyWaisbord/OneDrive - Technion/Kneidel/Packages/Test_6s\גג
+🔄 Converting bass.flac to mono
+📏 LUFS for bass.flac: -27.40
+🎚️ Normalizing bass.flac from -27.40 to -14.0 LUFS
+C:\Users\RoyWaisbord\OneDrive - Technion\Kneidel\Package_Creation\Kneidel_venv\lib\site-packages\pyloudnorm\normalize.py:62: UserWarning: Possible clipped samples in output.
+  warnings.warn("Possible clipped samples in output.")
+🔊 Max amplitude before scaling: 1.3653
+⚠️ Clipping detected after normalization. Scaling down by factor 1.37
+🔊 Max amplitude after scaling: 1.0000
+💾 Normalized and saved: bass.flac
+🔄 Converting drums.flac to mono
+📏 LUFS for drums.flac: -19.55
+🎚️ Normalizing drums.flac from -19.55 to -14.0 LUFS
+C:\Users\RoyWaisbord\OneDrive - Technion\Kneidel\Package_Creation\Kneidel_venv\lib\site-packages\pyloudnorm\normalize.py:62: UserWarning: Possible clipped samples in output.
+  warnings.warn("Possible clipped samples in output.")
+🔊 Max amplitude before scaling: 1.8571
+⚠️ Clipping detected after normalization. Scaling down by factor 1.86
+🔊 Max amplitude after scaling: 1.0000
+💾 Normalized and saved: drums.flac
+🔄 Converting guitar.flac to mono
+📏 LUFS for guitar.flac: -26.67
+🎚️ Normalizing guitar.flac from -26.67 to -14.0 LUFS
+C:\Users\RoyWaisbord\OneDrive - Technion\Kneidel\Package_Creation\Kneidel_venv\lib\site-packages\pyloudnorm\normalize.py:62: UserWarning: Possible clipped samples in output.
+  warnings.warn("Possible clipped samples in output.")
+🔊 Max amplitude before scaling: 1.5663
+⚠️ Clipping detected after normalization. Scaling down by factor 1.57
+🔊 Max amplitude after scaling: 1.0000
+💾 Normalized and saved: guitar.flac
+🔄 Converting other.flac to mono
+📏 LUFS for other.flac: -28.37
+🎚️ Normalizing other.flac from -28.37 to -14.0 LUFS
+C:\Users\RoyWaisbord\OneDrive - Technion\Kneidel\Package_Creation\Kneidel_venv\lib\site-packages\pyloudnorm\normalize.py:62: UserWarning: Possible clipped samples in output.
+  warnings.warn("Possible clipped samples in output.")
+🔊 Max amplitude before scaling: 1.9721
+⚠️ Clipping detected after normalization. Scaling down by factor 1.97
+🔊 Max amplitude after scaling: 1.0000
+💾 Normalized and saved: other.flac
+🔄 Converting piano.flac to mono
+📏 LUFS for piano.flac: -27.15
+🎚️ Normalizing piano.flac from -27.15 to -14.0 LUFS
+C:\Users\RoyWaisbord\OneDrive - Technion\Kneidel\Package_Creation\Kneidel_venv\lib\site-packages\pyloudnorm\normalize.py:62: UserWarning: Possible clipped samples in output.
+  warnings.warn("Possible clipped samples in output.")
+🔊 Max amplitude before scaling: 1.9056
+⚠️ Clipping detected after normalization. Scaling down by factor 1.91
+🔊 Max amplitude after scaling: 1.0000
+💾 Normalized and saved: piano.flac
+🔄 Converting vocals.flac to mono
+📏 LUFS for vocals.flac: -18.80
+🎚️ Normalizing vocals.flac from -18.80 to -14.0 LUFS
+🔊 Max amplitude before scaling: 0.9619
+💾 Normalized and saved: vocals.flac
+
+📊 Stem LUFS scores before sorting: [('bass.flac', -27.402926149979557), ('drums.flac', -19.546468158954905), ('guitar.flac', -26.665579555670945), ('other.flac', -28.37006546392135), ('piano.flac', -27.154611390948116), ('vocals.flac', -18.801356510223478)]
+
+📊 Stem LUFS scores after sorting: [('bass.flac', -16.704448426505127), ('drums.flac', -19.37690058616026), ('guitar.flac', -17.89739482457628), ('other.flac', -20.139782589564486), ('piano.flac', -19.600604629945344), ('vocals.flac', -13.999999863127927)]
+🔁 Renamed 'other.flac' → '1.flac'
+🔁 Renamed 'bass.flac' → '2.flac'
+🔁 Renamed 'piano.flac' → '3.flac'
+🔁 Renamed 'guitar.flac' → '4.flac'
+🔁 Renamed 'drums.flac' → '5.flac'
+🔁 Renamed vocals 'vocals.flac' → '6.flac'
+🔍 Fetching metadata for: גג
+Metadata saved to: C:/Users/RoyWaisbord/OneDrive - Technion/Kneidel/Packages/Test_6s\גג\גג - Girafot.json
+
+🔁 Processing חרבו דרבו [6/14]
+   🎵 Detecting choruses...WARNING:tensorflow:6 out of the last 6 calls to <function Model.make_predict_function.<locals>.predict_function at 0x000001CB0612BD00> triggered tf.function retracing. Tracing is expensive and the excessive number of tracings could be due to (1) creating @tf.function repeatedly in a loop, (2) passing tensors with different shapes, (3) passing Python objects instead of tensors. For (1), please define your @tf.function outside of the loop. For (2), @tf.function has reduce_retracing=True option that can avoid unnecessary retracing. For (3), please refer to https://www.tensorflow.org/guide/function#controlling_retracing and https://www.tensorflow.org/api_docs/python/tf/function for  more details.
+ ✔
+   🎯 Extracting chorus segment... ✔
+   ⚙ Running separation for: חרבו דרבו.mp3
+   ✔ Separation completed.
+   🔁 Renamed output folder to: חרבו דרבו
+   📂 Moved: C:/Users/RoyWaisbord/OneDrive - Technion/Kneidel/Packages/Test_6s\htdemucs_6s\חרבו דרבו → C:/Users/RoyWaisbord/OneDrive - Technion/Kneidel/Packages/Test_6s\חרבו דרבו
+
+🎚️ Sorting stems for: חרבו דרבו
+
+🔍 Processing song folder: C:/Users/RoyWaisbord/OneDrive - Technion/Kneidel/Packages/Test_6s\חרבו דרבו
+🔄 Converting bass.flac to mono
+📏 LUFS for bass.flac: -20.99
+🎚️ Normalizing bass.flac from -20.99 to -14.0 LUFS
+C:\Users\RoyWaisbord\OneDrive - Technion\Kneidel\Package_Creation\Kneidel_venv\lib\site-packages\pyloudnorm\normalize.py:62: UserWarning: Possible clipped samples in output.
+  warnings.warn("Possible clipped samples in output.")
+🔊 Max amplitude before scaling: 1.2327
+⚠️ Clipping detected after normalization. Scaling down by factor 1.23
+🔊 Max amplitude after scaling: 1.0000
+💾 Normalized and saved: bass.flac
+🔄 Converting drums.flac to mono
+📏 LUFS for drums.flac: -17.35
+🎚️ Normalizing drums.flac from -17.35 to -14.0 LUFS
+C:\Users\RoyWaisbord\OneDrive - Technion\Kneidel\Package_Creation\Kneidel_venv\lib\site-packages\pyloudnorm\normalize.py:62: UserWarning: Possible clipped samples in output.
+  warnings.warn("Possible clipped samples in output.")
+🔊 Max amplitude before scaling: 1.4222
+⚠️ Clipping detected after normalization. Scaling down by factor 1.42
+🔊 Max amplitude after scaling: 1.0000
+💾 Normalized and saved: drums.flac
+🔄 Converting guitar.flac to mono
+📏 LUFS for guitar.flac: -inf
+⚠️  Skipping normalization for guitar.flac: LUFS=-inf < threshold=-35
+🔄 Converting other.flac to mono
+📏 LUFS for other.flac: -33.94
+🎚️ Normalizing other.flac from -33.94 to -14.0 LUFS
+C:\Users\RoyWaisbord\OneDrive - Technion\Kneidel\Package_Creation\Kneidel_venv\lib\site-packages\pyloudnorm\normalize.py:62: UserWarning: Possible clipped samples in output.
+  warnings.warn("Possible clipped samples in output.")
+🔊 Max amplitude before scaling: 3.1964
+⚠️ Clipping detected after normalization. Scaling down by factor 3.20
+🔊 Max amplitude after scaling: 1.0000
+💾 Normalized and saved: other.flac
+🔄 Converting piano.flac to mono
+📏 LUFS for piano.flac: -inf
+⚠️  Skipping normalization for piano.flac: LUFS=-inf < threshold=-35
+🔄 Converting vocals.flac to mono
+📏 LUFS for vocals.flac: -19.79
+🎚️ Normalizing vocals.flac from -19.79 to -14.0 LUFS
+C:\Users\RoyWaisbord\OneDrive - Technion\Kneidel\Package_Creation\Kneidel_venv\lib\site-packages\pyloudnorm\normalize.py:62: UserWarning: Possible clipped samples in output.
+  warnings.warn("Possible clipped samples in output.")
+🔊 Max amplitude before scaling: 1.4755
+⚠️ Clipping detected after normalization. Scaling down by factor 1.48
+🔊 Max amplitude after scaling: 1.0000
+💾 Normalized and saved: vocals.flac
+
+📊 Stem LUFS scores before sorting: [('bass.flac', -20.991264366899422), ('drums.flac', -17.353712156519183), ('guitar.flac', -inf), ('other.flac', -33.943887147775406), ('piano.flac', -inf), ('vocals.flac', -19.789976251490454)]
+
+📊 Stem LUFS scores after sorting: [('bass.flac', -15.816860673822736), ('drums.flac', -17.059183366954034), ('guitar.flac', -inf), ('other.flac', -24.112700764521097), ('piano.flac', -inf), ('vocals.flac', -17.378762474983183)]
+🔁 Renamed 'guitar.flac' → 'guitar_Quiet.flac'
+🔁 Renamed 'piano.flac' → 'piano_Quiet.flac'
+🔁 Renamed 'other.flac' → '3.flac'
+🔁 Renamed 'bass.flac' → '4.flac'
+🔁 Renamed 'drums.flac' → '6.flac'
+🔁 Renamed vocals 'vocals.flac' → '7.flac'
+🔍 Fetching metadata for: חרבו דרבו
+Metadata saved to: C:/Users/RoyWaisbord/OneDrive - Technion/Kneidel/Packages/Test_6s\חרבו דרבו\חרבו דרבו - סטילה.json
+
+🔁 Processing כאלו מילים [7/14]
+   🎵 Detecting choruses... ✔
+   🎯 Extracting chorus segment... ✔
+   ⚙ Running separation for: כאלו מילים.mp3
+   ✔ Separation completed.
+   🔁 Renamed output folder to: כאלו מילים
+   📂 Moved: C:/Users/RoyWaisbord/OneDrive - Technion/Kneidel/Packages/Test_6s\htdemucs_6s\כאלו מילים → C:/Users/RoyWaisbord/OneDrive - Technion/Kneidel/Packages/Test_6s\כאלו מילים
+
+🎚️ Sorting stems for: כאלו מילים
+
+🔍 Processing song folder: C:/Users/RoyWaisbord/OneDrive - Technion/Kneidel/Packages/Test_6s\כאלו מילים
+🔄 Converting bass.flac to mono
+📏 LUFS for bass.flac: -18.49
+🎚️ Normalizing bass.flac from -18.49 to -14.0 LUFS
+C:\Users\RoyWaisbord\OneDrive - Technion\Kneidel\Package_Creation\Kneidel_venv\lib\site-packages\pyloudnorm\normalize.py:62: UserWarning: Possible clipped samples in output.
+  warnings.warn("Possible clipped samples in output.")
+🔊 Max amplitude before scaling: 1.0151
+⚠️ Clipping detected after normalization. Scaling down by factor 1.02
+🔊 Max amplitude after scaling: 1.0000
+💾 Normalized and saved: bass.flac
+🔄 Converting drums.flac to mono
+📏 LUFS for drums.flac: -23.42
+🎚️ Normalizing drums.flac from -23.42 to -14.0 LUFS
+C:\Users\RoyWaisbord\OneDrive - Technion\Kneidel\Package_Creation\Kneidel_venv\lib\site-packages\pyloudnorm\normalize.py:62: UserWarning: Possible clipped samples in output.
+  warnings.warn("Possible clipped samples in output.")
+🔊 Max amplitude before scaling: 2.7720
+⚠️ Clipping detected after normalization. Scaling down by factor 2.77
+🔊 Max amplitude after scaling: 1.0000
+💾 Normalized and saved: drums.flac
+🔄 Converting guitar.flac to mono
+📏 LUFS for guitar.flac: -25.00
+🎚️ Normalizing guitar.flac from -25.00 to -14.0 LUFS
+C:\Users\RoyWaisbord\OneDrive - Technion\Kneidel\Package_Creation\Kneidel_venv\lib\site-packages\pyloudnorm\normalize.py:62: UserWarning: Possible clipped samples in output.
+  warnings.warn("Possible clipped samples in output.")
+🔊 Max amplitude before scaling: 2.2940
+⚠️ Clipping detected after normalization. Scaling down by factor 2.29
+🔊 Max amplitude after scaling: 1.0000
+💾 Normalized and saved: guitar.flac
+🔄 Converting other.flac to mono
+📏 LUFS for other.flac: -22.26
+🎚️ Normalizing other.flac from -22.26 to -14.0 LUFS
+C:\Users\RoyWaisbord\OneDrive - Technion\Kneidel\Package_Creation\Kneidel_venv\lib\site-packages\pyloudnorm\normalize.py:62: UserWarning: Possible clipped samples in output.
+  warnings.warn("Possible clipped samples in output.")
+🔊 Max amplitude before scaling: 1.7200
+⚠️ Clipping detected after normalization. Scaling down by factor 1.72
+🔊 Max amplitude after scaling: 1.0000
+💾 Normalized and saved: other.flac
+🔄 Converting piano.flac to mono
+📏 LUFS for piano.flac: -37.30
+⚠️  Skipping normalization for piano.flac: LUFS=-37.30 < threshold=-35
+🔄 Converting vocals.flac to mono
+📏 LUFS for vocals.flac: -14.41
+🎚️ Normalizing vocals.flac from -14.41 to -14.0 LUFS
+C:\Users\RoyWaisbord\OneDrive - Technion\Kneidel\Package_Creation\Kneidel_venv\lib\site-packages\pyloudnorm\normalize.py:62: UserWarning: Possible clipped samples in output.
+  warnings.warn("Possible clipped samples in output.")
+🔊 Max amplitude before scaling: 1.0285
+⚠️ Clipping detected after normalization. Scaling down by factor 1.03
+🔊 Max amplitude after scaling: 1.0000
+💾 Normalized and saved: vocals.flac
+
+📊 Stem LUFS scores before sorting: [('bass.flac', -18.488041194163568), ('drums.flac', -23.417491563540434), ('guitar.flac', -25.00284066462608), ('other.flac', -22.262264027946298), ('piano.flac', -37.29553707131974), ('vocals.flac', -14.409211279893078)]
+
+📊 Stem LUFS scores after sorting: [('bass.flac', -14.129875545448495), ('drums.flac', -22.85592753901759), ('guitar.flac', -21.211746053875633), ('other.flac', -18.71043401715714), ('piano.flac', -37.29553707131974), ('vocals.flac', -14.244101855374868)]
+🔁 Renamed 'piano.flac' → 'piano_Quiet.flac'
+🔁 Renamed 'guitar.flac' → '2.flac'
+🔁 Renamed 'drums.flac' → '3.flac'
+🔁 Renamed 'other.flac' → '4.flac'
+🔁 Renamed 'bass.flac' → '5.flac'
+🔁 Renamed vocals 'vocals.flac' → '6.flac'
+🔍 Fetching metadata for: כאלו מילים
+Metadata saved to: C:/Users/RoyWaisbord/OneDrive - Technion/Kneidel/Packages/Test_6s\כאלו מילים\כאלו מילים - Tomer Yosef.json
+
+🔁 Processing כלבויניקית [8/14]
+   🎵 Detecting choruses... ✔
+   🎯 Extracting chorus segment... ✔
+   ⚙ Running separation for: כלבויניקית.mp3
+   ✔ Separation completed.
+   🔁 Renamed output folder to: כלבויניקית
+   📂 Moved: C:/Users/RoyWaisbord/OneDrive - Technion/Kneidel/Packages/Test_6s\htdemucs_6s\כלבויניקית → C:/Users/RoyWaisbord/OneDrive - Technion/Kneidel/Packages/Test_6s\כלבויניקית
+
+🎚️ Sorting stems for: כלבויניקית
+
+🔍 Processing song folder: C:/Users/RoyWaisbord/OneDrive - Technion/Kneidel/Packages/Test_6s\כלבויניקית
+🔄 Converting bass.flac to mono
+📏 LUFS for bass.flac: -24.56
+🎚️ Normalizing bass.flac from -24.56 to -14.0 LUFS
+C:\Users\RoyWaisbord\OneDrive - Technion\Kneidel\Package_Creation\Kneidel_venv\lib\site-packages\pyloudnorm\normalize.py:62: UserWarning: Possible clipped samples in output.
+  warnings.warn("Possible clipped samples in output.")
+🔊 Max amplitude before scaling: 1.3087
+⚠️ Clipping detected after normalization. Scaling down by factor 1.31
+🔊 Max amplitude after scaling: 1.0000
+💾 Normalized and saved: bass.flac
+🔄 Converting drums.flac to mono
+📏 LUFS for drums.flac: -18.50
+🎚️ Normalizing drums.flac from -18.50 to -14.0 LUFS
+C:\Users\RoyWaisbord\OneDrive - Technion\Kneidel\Package_Creation\Kneidel_venv\lib\site-packages\pyloudnorm\normalize.py:62: UserWarning: Possible clipped samples in output.
+  warnings.warn("Possible clipped samples in output.")
+🔊 Max amplitude before scaling: 1.3454
+⚠️ Clipping detected after normalization. Scaling down by factor 1.35
+🔊 Max amplitude after scaling: 1.0000
+💾 Normalized and saved: drums.flac
+🔄 Converting guitar.flac to mono
+📏 LUFS for guitar.flac: -25.04
+🎚️ Normalizing guitar.flac from -25.04 to -14.0 LUFS
+C:\Users\RoyWaisbord\OneDrive - Technion\Kneidel\Package_Creation\Kneidel_venv\lib\site-packages\pyloudnorm\normalize.py:62: UserWarning: Possible clipped samples in output.
+  warnings.warn("Possible clipped samples in output.")
+🔊 Max amplitude before scaling: 1.1273
+⚠️ Clipping detected after normalization. Scaling down by factor 1.13
+🔊 Max amplitude after scaling: 1.0000
+💾 Normalized and saved: guitar.flac
+🔄 Converting other.flac to mono
+📏 LUFS for other.flac: -37.37
+⚠️  Skipping normalization for other.flac: LUFS=-37.37 < threshold=-35
+🔄 Converting piano.flac to mono
+📏 LUFS for piano.flac: -67.66
+⚠️  Skipping normalization for piano.flac: LUFS=-67.66 < threshold=-35
+🔄 Converting vocals.flac to mono
+📏 LUFS for vocals.flac: -15.55
+🎚️ Normalizing vocals.flac from -15.55 to -14.0 LUFS
+C:\Users\RoyWaisbord\OneDrive - Technion\Kneidel\Package_Creation\Kneidel_venv\lib\site-packages\pyloudnorm\normalize.py:62: UserWarning: Possible clipped samples in output.
+  warnings.warn("Possible clipped samples in output.")
+🔊 Max amplitude before scaling: 1.0416
+⚠️ Clipping detected after normalization. Scaling down by factor 1.04
+🔊 Max amplitude after scaling: 1.0000
+💾 Normalized and saved: vocals.flac
+
+📊 Stem LUFS scores before sorting: [('bass.flac', -24.560567663630405), ('drums.flac', -18.504256075765856), ('guitar.flac', -25.03730854925427), ('other.flac', -37.37066106218694), ('piano.flac', -67.65847039893539), ('vocals.flac', -15.549327275308793)]
+
+📊 Stem LUFS scores after sorting: [('bass.flac', -16.336871239902262), ('drums.flac', -16.577016018793728), ('guitar.flac', -15.04053414770126), ('other.flac', -37.37066106218694), ('piano.flac', -67.65847039893539), ('vocals.flac', -14.353667784578256)]
+🔁 Renamed 'piano.flac' → 'piano_Quiet.flac'
+🔁 Renamed 'other.flac' → 'other_Quiet.flac'
+🔁 Renamed 'guitar.flac' → '3.flac'
+🔁 Renamed 'bass.flac' → '4.flac'
+🔁 Renamed 'drums.flac' → '5.flac'
+🔁 Renamed vocals 'vocals.flac' → '6.flac'
+🔍 Fetching metadata for: כלבויניקית
+Metadata saved to: C:/Users/RoyWaisbord/OneDrive - Technion/Kneidel/Packages/Test_6s\כלבויניקית\כלבויניקית - E-Z.json
+
+🔁 Processing לגור איתו [9/14]
+   🎵 Detecting choruses... ✔
+   🎯 Extracting chorus segment... ✔
+   ⚙ Running separation for: לגור איתו.mp3
+   ✔ Separation completed.
+   🔁 Renamed output folder to: לגור איתו
+   📂 Moved: C:/Users/RoyWaisbord/OneDrive - Technion/Kneidel/Packages/Test_6s\htdemucs_6s\לגור איתו → C:/Users/RoyWaisbord/OneDrive - Technion/Kneidel/Packages/Test_6s\לגור איתו
+
+🎚️ Sorting stems for: לגור איתו
+
+🔍 Processing song folder: C:/Users/RoyWaisbord/OneDrive - Technion/Kneidel/Packages/Test_6s\לגור איתו
+🔄 Converting bass.flac to mono
+📏 LUFS for bass.flac: -24.31
+🎚️ Normalizing bass.flac from -24.31 to -14.0 LUFS
+C:\Users\RoyWaisbord\OneDrive - Technion\Kneidel\Package_Creation\Kneidel_venv\lib\site-packages\pyloudnorm\normalize.py:62: UserWarning: Possible clipped samples in output.
+  warnings.warn("Possible clipped samples in output.")
+🔊 Max amplitude before scaling: 1.3123
+⚠️ Clipping detected after normalization. Scaling down by factor 1.31
+🔊 Max amplitude after scaling: 1.0000
+💾 Normalized and saved: bass.flac
+🔄 Converting drums.flac to mono
+📏 LUFS for drums.flac: -19.39
+🎚️ Normalizing drums.flac from -19.39 to -14.0 LUFS
+C:\Users\RoyWaisbord\OneDrive - Technion\Kneidel\Package_Creation\Kneidel_venv\lib\site-packages\pyloudnorm\normalize.py:62: UserWarning: Possible clipped samples in output.
+  warnings.warn("Possible clipped samples in output.")
+🔊 Max amplitude before scaling: 1.8302
+⚠️ Clipping detected after normalization. Scaling down by factor 1.83
+🔊 Max amplitude after scaling: 1.0000
+💾 Normalized and saved: drums.flac
+🔄 Converting guitar.flac to mono
+📏 LUFS for guitar.flac: -25.45
+🎚️ Normalizing guitar.flac from -25.45 to -14.0 LUFS
+C:\Users\RoyWaisbord\OneDrive - Technion\Kneidel\Package_Creation\Kneidel_venv\lib\site-packages\pyloudnorm\normalize.py:62: UserWarning: Possible clipped samples in output.
+  warnings.warn("Possible clipped samples in output.")
+🔊 Max amplitude before scaling: 2.0782
+⚠️ Clipping detected after normalization. Scaling down by factor 2.08
+🔊 Max amplitude after scaling: 1.0000
+💾 Normalized and saved: guitar.flac
+🔄 Converting other.flac to mono
+📏 LUFS for other.flac: -14.46
+🎚️ Normalizing other.flac from -14.46 to -14.0 LUFS
+🔊 Max amplitude before scaling: 0.8412
+💾 Normalized and saved: other.flac
+🔄 Converting piano.flac to mono
+📏 LUFS for piano.flac: -48.99
+⚠️  Skipping normalization for piano.flac: LUFS=-48.99 < threshold=-35
+🔄 Converting vocals.flac to mono
+📏 LUFS for vocals.flac: -54.06
+⚠️  Skipping normalization for vocals.flac: LUFS=-54.06 < threshold=-35
+
+📊 Stem LUFS scores before sorting: [('bass.flac', -24.31136088913242), ('drums.flac', -19.391750754268433), ('guitar.flac', -25.454788543142033), ('other.flac', -14.461707074444616), ('piano.flac', -48.98843299793136), ('vocals.flac', -54.06340426933321)]
+
+📊 Stem LUFS scores after sorting: [('bass.flac', -16.36037649459164), ('drums.flac', -19.25011398215308), ('guitar.flac', -20.524551838845266), ('other.flac', -13.99999986254349), ('piano.flac', -48.98843299793136), ('vocals.flac', -54.06340426933321)]
+🔁 Renamed 'piano.flac' → 'piano_Quiet.flac'
+🔁 Renamed 'guitar.flac' → '3.flac'
+🔁 Renamed 'bass.flac' → '4.flac'
+🔁 Renamed 'drums.flac' → '5.flac'
+🔁 Renamed 'other.flac' → '6.flac'
+🔁 Renamed vocals 'vocals.flac' → '7.flac'
+🔍 Fetching metadata for: לגור איתו
+Metadata saved to: C:/Users/RoyWaisbord/OneDrive - Technion/Kneidel/Packages/Test_6s\לגור איתו\לגור איתו - Riki Gal.json
+
+🔁 Processing נופל וקם [10/14]
+   🎵 Detecting choruses... ✔
+   🎯 Extracting chorus segment... ✔
+   ⚙ Running separation for: נופל וקם.mp3
+   ✔ Separation completed.
+   🔁 Renamed output folder to: נופל וקם
+   📂 Moved: C:/Users/RoyWaisbord/OneDrive - Technion/Kneidel/Packages/Test_6s\htdemucs_6s\נופל וקם → C:/Users/RoyWaisbord/OneDrive - Technion/Kneidel/Packages/Test_6s\נופל וקם
+
+🎚️ Sorting stems for: נופל וקם
+
+🔍 Processing song folder: C:/Users/RoyWaisbord/OneDrive - Technion/Kneidel/Packages/Test_6s\נופל וקם
+🔄 Converting bass.flac to mono
+📏 LUFS for bass.flac: -21.87
+🎚️ Normalizing bass.flac from -21.87 to -14.0 LUFS
+🔊 Max amplitude before scaling: 0.8571
+💾 Normalized and saved: bass.flac
+🔄 Converting drums.flac to mono
+📏 LUFS for drums.flac: -22.11
+🎚️ Normalizing drums.flac from -22.11 to -14.0 LUFS
+C:\Users\RoyWaisbord\OneDrive - Technion\Kneidel\Package_Creation\Kneidel_venv\lib\site-packages\pyloudnorm\normalize.py:62: UserWarning: Possible clipped samples in output.
+  warnings.warn("Possible clipped samples in output.")
+🔊 Max amplitude before scaling: 1.8151
+⚠️ Clipping detected after normalization. Scaling down by factor 1.82
+🔊 Max amplitude after scaling: 1.0000
+💾 Normalized and saved: drums.flac
+🔄 Converting guitar.flac to mono
+📏 LUFS for guitar.flac: -29.37
+🎚️ Normalizing guitar.flac from -29.37 to -14.0 LUFS
+C:\Users\RoyWaisbord\OneDrive - Technion\Kneidel\Package_Creation\Kneidel_venv\lib\site-packages\pyloudnorm\normalize.py:62: UserWarning: Possible clipped samples in output.
+  warnings.warn("Possible clipped samples in output.")
+🔊 Max amplitude before scaling: 1.2700
+⚠️ Clipping detected after normalization. Scaling down by factor 1.27
+🔊 Max amplitude after scaling: 1.0000
+💾 Normalized and saved: guitar.flac
+🔄 Converting other.flac to mono
+📏 LUFS for other.flac: -34.48
+🎚️ Normalizing other.flac from -34.48 to -14.0 LUFS
+C:\Users\RoyWaisbord\OneDrive - Technion\Kneidel\Package_Creation\Kneidel_venv\lib\site-packages\pyloudnorm\normalize.py:62: UserWarning: Possible clipped samples in output.
+  warnings.warn("Possible clipped samples in output.")
+🔊 Max amplitude before scaling: 1.3292
+⚠️ Clipping detected after normalization. Scaling down by factor 1.33
+🔊 Max amplitude after scaling: 1.0000
+💾 Normalized and saved: other.flac
+🔄 Converting piano.flac to mono
+📏 LUFS for piano.flac: -55.03
+⚠️  Skipping normalization for piano.flac: LUFS=-55.03 < threshold=-35
+🔄 Converting vocals.flac to mono
+📏 LUFS for vocals.flac: -17.61
+🎚️ Normalizing vocals.flac from -17.61 to -14.0 LUFS
+C:\Users\RoyWaisbord\OneDrive - Technion\Kneidel\Package_Creation\Kneidel_venv\lib\site-packages\pyloudnorm\normalize.py:62: UserWarning: Possible clipped samples in output.
+  warnings.warn("Possible clipped samples in output.")
+🔊 Max amplitude before scaling: 1.1171
+⚠️ Clipping detected after normalization. Scaling down by factor 1.12
+🔊 Max amplitude after scaling: 1.0000
+💾 Normalized and saved: vocals.flac
+
+📊 Stem LUFS scores before sorting: [('bass.flac', -21.866074246796835), ('drums.flac', -22.113462933788714), ('guitar.flac', -29.370074407616787), ('other.flac', -34.47739670034707), ('piano.flac', -55.027201990600695), ('vocals.flac', -17.614276469071196)]
+
+📊 Stem LUFS scores after sorting: [('bass.flac', -14.000000015058014), ('drums.flac', -19.177824239034617), ('guitar.flac', -16.075837657689444), ('other.flac', -16.5704830559982), ('piano.flac', -55.027201990600695), ('vocals.flac', -14.961461857721892)]
+🔁 Renamed 'piano.flac' → 'piano_Quiet.flac'
+🔁 Renamed 'other.flac' → '2.flac'
+🔁 Renamed 'guitar.flac' → '3.flac'
+🔁 Renamed 'drums.flac' → '4.flac'
+🔁 Renamed 'bass.flac' → '5.flac'
+🔁 Renamed vocals 'vocals.flac' → '6.flac'
+🔍 Fetching metadata for: נופל וקם
+Metadata saved to: C:/Users/RoyWaisbord/OneDrive - Technion/Kneidel/Packages/Test_6s\נופל וקם\נופל וקם - Shabak Samech.json
+
+🔁 Processing ערב של יום בהיר [11/14]
+   🎵 Detecting choruses... ✔
+   🎯 Extracting chorus segment... ✔
+   ⚙ Running separation for: ערב של יום בהיר.mp3
+   ✔ Separation completed.
+   🔁 Renamed output folder to: ערב של יום בהיר
+   📂 Moved: C:/Users/RoyWaisbord/OneDrive - Technion/Kneidel/Packages/Test_6s\htdemucs_6s\ערב של יום בהיר → C:/Users/RoyWaisbord/OneDrive - Technion/Kneidel/Packages/Test_6s\ערב של יום בהיר
+
+🎚️ Sorting stems for: ערב של יום בהיר
+
+🔍 Processing song folder: C:/Users/RoyWaisbord/OneDrive - Technion/Kneidel/Packages/Test_6s\ערב של יום בהיר
+🔄 Converting bass.flac to mono
+📏 LUFS for bass.flac: -24.12
+🎚️ Normalizing bass.flac from -24.12 to -14.0 LUFS
+C:\Users\RoyWaisbord\OneDrive - Technion\Kneidel\Package_Creation\Kneidel_venv\lib\site-packages\pyloudnorm\normalize.py:62: UserWarning: Possible clipped samples in output.
+  warnings.warn("Possible clipped samples in output.")
+🔊 Max amplitude before scaling: 1.2024
+⚠️ Clipping detected after normalization. Scaling down by factor 1.20
+🔊 Max amplitude after scaling: 1.0000
+💾 Normalized and saved: bass.flac
+🔄 Converting drums.flac to mono
+📏 LUFS for drums.flac: -25.12
+🎚️ Normalizing drums.flac from -25.12 to -14.0 LUFS
+C:\Users\RoyWaisbord\OneDrive - Technion\Kneidel\Package_Creation\Kneidel_venv\lib\site-packages\pyloudnorm\normalize.py:62: UserWarning: Possible clipped samples in output.
+  warnings.warn("Possible clipped samples in output.")
+🔊 Max amplitude before scaling: 2.8465
+⚠️ Clipping detected after normalization. Scaling down by factor 2.85
+🔊 Max amplitude after scaling: 1.0000
+💾 Normalized and saved: drums.flac
+🔄 Converting guitar.flac to mono
+📏 LUFS for guitar.flac: -27.41
+🎚️ Normalizing guitar.flac from -27.41 to -14.0 LUFS
+C:\Users\RoyWaisbord\OneDrive - Technion\Kneidel\Package_Creation\Kneidel_venv\lib\site-packages\pyloudnorm\normalize.py:62: UserWarning: Possible clipped samples in output.
+  warnings.warn("Possible clipped samples in output.")
+🔊 Max amplitude before scaling: 1.2451
+⚠️ Clipping detected after normalization. Scaling down by factor 1.25
+🔊 Max amplitude after scaling: 1.0000
+💾 Normalized and saved: guitar.flac
+🔄 Converting other.flac to mono
+📏 LUFS for other.flac: -57.94
+⚠️  Skipping normalization for other.flac: LUFS=-57.94 < threshold=-35
+🔄 Converting piano.flac to mono
+📏 LUFS for piano.flac: -48.64
+⚠️  Skipping normalization for piano.flac: LUFS=-48.64 < threshold=-35
+🔄 Converting vocals.flac to mono
+📏 LUFS for vocals.flac: -20.84
+🎚️ Normalizing vocals.flac from -20.84 to -14.0 LUFS
+C:\Users\RoyWaisbord\OneDrive - Technion\Kneidel\Package_Creation\Kneidel_venv\lib\site-packages\pyloudnorm\normalize.py:62: UserWarning: Possible clipped samples in output.
+  warnings.warn("Possible clipped samples in output.")
+🔊 Max amplitude before scaling: 1.0594
+⚠️ Clipping detected after normalization. Scaling down by factor 1.06
+🔊 Max amplitude after scaling: 1.0000
+💾 Normalized and saved: vocals.flac
+
+📊 Stem LUFS scores before sorting: [('bass.flac', -24.11636438042481), ('drums.flac', -25.116800735483668), ('guitar.flac', -27.414044441412926), ('other.flac', -57.93558455733894), ('piano.flac', -48.6445285942503), ('vocals.flac', -20.84070362895836)]
+
+📊 Stem LUFS scores after sorting: [('bass.flac', -15.601230249571968), ('drums.flac', -23.08636389608538), ('guitar.flac', -15.903912965113909), ('other.flac', -57.93558455733894), ('piano.flac', -48.6445285942503), ('vocals.flac', -14.50154725262713)]
+🔁 Renamed 'other.flac' → 'other_Quiet.flac'
+🔁 Renamed 'piano.flac' → 'piano_Quiet.flac'
+🔁 Renamed 'guitar.flac' → '3.flac'
+🔁 Renamed 'drums.flac' → '4.flac'
+🔁 Renamed 'bass.flac' → '5.flac'
+🔁 Renamed vocals 'vocals.flac' → '6.flac'
+🔍 Fetching metadata for: ערב של יום בהיר
+Metadata saved to: C:/Users/RoyWaisbord/OneDrive - Technion/Kneidel/Packages/Test_6s\ערב של יום בהיר\ערב של יום בהיר - Efraim Shamir.json
+
+🔁 Processing שוב הדיסקו כאן [12/14]
+   🎵 Detecting choruses... ✔
+   🎯 Extracting chorus segment... ✔
+   ⚙ Running separation for: שוב הדיסקו כאן.mp3
+   ✔ Separation completed.
+   🔁 Renamed output folder to: שוב הדיסקו כאן
+   📂 Moved: C:/Users/RoyWaisbord/OneDrive - Technion/Kneidel/Packages/Test_6s\htdemucs_6s\שוב הדיסקו כאן → C:/Users/RoyWaisbord/OneDrive - Technion/Kneidel/Packages/Test_6s\שוב הדיסקו כאן
+
+🎚️ Sorting stems for: שוב הדיסקו כאן
+
+🔍 Processing song folder: C:/Users/RoyWaisbord/OneDrive - Technion/Kneidel/Packages/Test_6s\שוב הדיסקו כאן
+🔄 Converting bass.flac to mono
+📏 LUFS for bass.flac: -48.08
+⚠️  Skipping normalization for bass.flac: LUFS=-48.08 < threshold=-35
+🔄 Converting drums.flac to mono
+📏 LUFS for drums.flac: -28.09
+🎚️ Normalizing drums.flac from -28.09 to -14.0 LUFS
+C:\Users\RoyWaisbord\OneDrive - Technion\Kneidel\Package_Creation\Kneidel_venv\lib\site-packages\pyloudnorm\normalize.py:62: UserWarning: Possible clipped samples in output.
+  warnings.warn("Possible clipped samples in output.")
+🔊 Max amplitude before scaling: 3.6909
+⚠️ Clipping detected after normalization. Scaling down by factor 3.69
+🔊 Max amplitude after scaling: 1.0000
+💾 Normalized and saved: drums.flac
+🔄 Converting guitar.flac to mono
+📏 LUFS for guitar.flac: -29.43
+🎚️ Normalizing guitar.flac from -29.43 to -14.0 LUFS
+C:\Users\RoyWaisbord\OneDrive - Technion\Kneidel\Package_Creation\Kneidel_venv\lib\site-packages\pyloudnorm\normalize.py:62: UserWarning: Possible clipped samples in output.
+  warnings.warn("Possible clipped samples in output.")
+🔊 Max amplitude before scaling: 3.0704
+⚠️ Clipping detected after normalization. Scaling down by factor 3.07
+🔊 Max amplitude after scaling: 1.0000
+💾 Normalized and saved: guitar.flac
+🔄 Converting other.flac to mono
+📏 LUFS for other.flac: -39.00
+⚠️  Skipping normalization for other.flac: LUFS=-39.00 < threshold=-35
+🔄 Converting piano.flac to mono
+📏 LUFS for piano.flac: -37.55
+⚠️  Skipping normalization for piano.flac: LUFS=-37.55 < threshold=-35
+🔄 Converting vocals.flac to mono
+📏 LUFS for vocals.flac: -19.34
+🎚️ Normalizing vocals.flac from -19.34 to -14.0 LUFS
+C:\Users\RoyWaisbord\OneDrive - Technion\Kneidel\Package_Creation\Kneidel_venv\lib\site-packages\pyloudnorm\normalize.py:62: UserWarning: Possible clipped samples in output.
+  warnings.warn("Possible clipped samples in output.")
+🔊 Max amplitude before scaling: 1.8004
+⚠️ Clipping detected after normalization. Scaling down by factor 1.80
+🔊 Max amplitude after scaling: 1.0000
+💾 Normalized and saved: vocals.flac
+
+📊 Stem LUFS scores before sorting: [('bass.flac', -48.08385083708346), ('drums.flac', -28.09269235855673), ('guitar.flac', -29.425872554164716), ('other.flac', -39.00254789505124), ('piano.flac', -37.55331570695555), ('vocals.flac', -19.336144462542894)]
+
+📊 Stem LUFS scores after sorting: [('bass.flac', -48.08385083708346), ('drums.flac', -25.34256128469731), ('guitar.flac', -23.743971272658246), ('other.flac', -39.00254789505124), ('piano.flac', -37.55331570695555), ('vocals.flac', -19.10758733269743)]
+🔁 Renamed 'bass.flac' → 'bass_Quiet.flac'
+🔁 Renamed 'other.flac' → 'other_Quiet.flac'
+🔁 Renamed 'piano.flac' → 'piano_Quiet.flac'
+🔁 Renamed 'guitar.flac' → '4.flac'
+🔁 Renamed 'drums.flac' → '5.flac'
+🔁 Renamed vocals 'vocals.flac' → '6.flac'
+🔍 Fetching metadata for: שוב הדיסקו כאן
+Metadata saved to: C:/Users/RoyWaisbord/OneDrive - Technion/Kneidel/Packages/Test_6s\שוב הדיסקו כאן\שוב הדיסקו כאן - HaDorbanim.json
+
+🔁 Processing תותים [13/14]
+   🎵 Detecting choruses... ✔
+   🎯 Extracting chorus segment... ✔
+   ⚙ Running separation for: תותים.mp3
+   ✔ Separation completed.
+   🔁 Renamed output folder to: תותים
+   📂 Moved: C:/Users/RoyWaisbord/OneDrive - Technion/Kneidel/Packages/Test_6s\htdemucs_6s\תותים → C:/Users/RoyWaisbord/OneDrive - Technion/Kneidel/Packages/Test_6s\תותים
+
+🎚️ Sorting stems for: תותים
+
+🔍 Processing song folder: C:/Users/RoyWaisbord/OneDrive - Technion/Kneidel/Packages/Test_6s\תותים
+🔄 Converting bass.flac to mono
+📏 LUFS for bass.flac: -26.08
+🎚️ Normalizing bass.flac from -26.08 to -14.0 LUFS
+C:\Users\RoyWaisbord\OneDrive - Technion\Kneidel\Package_Creation\Kneidel_venv\lib\site-packages\pyloudnorm\normalize.py:62: UserWarning: Possible clipped samples in output.
+  warnings.warn("Possible clipped samples in output.")
+🔊 Max amplitude before scaling: 1.1955
+⚠️ Clipping detected after normalization. Scaling down by factor 1.20
+🔊 Max amplitude after scaling: 1.0000
+💾 Normalized and saved: bass.flac
+🔄 Converting drums.flac to mono
+📏 LUFS for drums.flac: -27.34
+🎚️ Normalizing drums.flac from -27.34 to -14.0 LUFS
+C:\Users\RoyWaisbord\OneDrive - Technion\Kneidel\Package_Creation\Kneidel_venv\lib\site-packages\pyloudnorm\normalize.py:62: UserWarning: Possible clipped samples in output.
+  warnings.warn("Possible clipped samples in output.")
+🔊 Max amplitude before scaling: 3.5727
+⚠️ Clipping detected after normalization. Scaling down by factor 3.57
+🔊 Max amplitude after scaling: 1.0000
+💾 Normalized and saved: drums.flac
+🔄 Converting guitar.flac to mono
+📏 LUFS for guitar.flac: -36.90
+⚠️  Skipping normalization for guitar.flac: LUFS=-36.90 < threshold=-35
+🔄 Converting other.flac to mono
+📏 LUFS for other.flac: -33.83
+🎚️ Normalizing other.flac from -33.83 to -14.0 LUFS
+C:\Users\RoyWaisbord\OneDrive - Technion\Kneidel\Package_Creation\Kneidel_venv\lib\site-packages\pyloudnorm\normalize.py:62: UserWarning: Possible clipped samples in output.
+  warnings.warn("Possible clipped samples in output.")
+🔊 Max amplitude before scaling: 2.0760
+⚠️ Clipping detected after normalization. Scaling down by factor 2.08
+🔊 Max amplitude after scaling: 1.0000
+💾 Normalized and saved: other.flac
+🔄 Converting piano.flac to mono
+📏 LUFS for piano.flac: -50.12
+⚠️  Skipping normalization for piano.flac: LUFS=-50.12 < threshold=-35
+🔄 Converting vocals.flac to mono
+📏 LUFS for vocals.flac: -22.68
+🎚️ Normalizing vocals.flac from -22.68 to -14.0 LUFS
+C:\Users\RoyWaisbord\OneDrive - Technion\Kneidel\Package_Creation\Kneidel_venv\lib\site-packages\pyloudnorm\normalize.py:62: UserWarning: Possible clipped samples in output.
+  warnings.warn("Possible clipped samples in output.")
+🔊 Max amplitude before scaling: 1.0592
+⚠️ Clipping detected after normalization. Scaling down by factor 1.06
+🔊 Max amplitude after scaling: 1.0000
+💾 Normalized and saved: vocals.flac
+
+📊 Stem LUFS scores before sorting: [('bass.flac', -26.075168606971225), ('drums.flac', -27.343778813453675), ('guitar.flac', -36.90374298757931), ('other.flac', -33.8306919626716), ('piano.flac', -50.12021997011533), ('vocals.flac', -22.678053094777898)]
+
+📊 Stem LUFS scores after sorting: [('bass.flac', -15.550714981188365), ('drums.flac', -25.06003283029511), ('guitar.flac', -36.90374298757931), ('other.flac', -20.344501421365667), ('piano.flac', -50.12021997011533), ('vocals.flac', -14.499671965395484)]
+🔁 Renamed 'piano.flac' → 'piano_Quiet.flac'
+🔁 Renamed 'guitar.flac' → 'guitar_Quiet.flac'
+🔁 Renamed 'other.flac' → '3.flac'
+🔁 Renamed 'drums.flac' → '4.flac'
+🔁 Renamed 'bass.flac' → '5.flac'
+🔁 Renamed vocals 'vocals.flac' → '6.flac'
+🔍 Fetching metadata for: תותים
+Metadata saved to: C:/Users/RoyWaisbord/OneDrive - Technion/Kneidel/Packages/Test_6s\תותים\תותים - Ethnix.json
+
+🔁 Processing תיק קטן [14/14]
+   🎵 Detecting choruses... ✔
+   🎯 Extracting chorus segment... ✔
+   ⚙ Running separation for: תיק קטן.mp3
+   ✔ Separation completed.
+   🔁 Renamed output folder to: תיק קטן
+   📂 Moved: C:/Users/RoyWaisbord/OneDrive - Technion/Kneidel/Packages/Test_6s\htdemucs_6s\תיק קטן → C:/Users/RoyWaisbord/OneDrive - Technion/Kneidel/Packages/Test_6s\תיק קטן
+
+🎚️ Sorting stems for: תיק קטן
+
+🔍 Processing song folder: C:/Users/RoyWaisbord/OneDrive - Technion/Kneidel/Packages/Test_6s\תיק קטן
+🔄 Converting bass.flac to mono
+📏 LUFS for bass.flac: -21.77
+🎚️ Normalizing bass.flac from -21.77 to -14.0 LUFS
+C:\Users\RoyWaisbord\OneDrive - Technion\Kneidel\Package_Creation\Kneidel_venv\lib\site-packages\pyloudnorm\normalize.py:62: UserWarning: Possible clipped samples in output.
+  warnings.warn("Possible clipped samples in output.")
+🔊 Max amplitude before scaling: 1.0715
+⚠️ Clipping detected after normalization. Scaling down by factor 1.07
+🔊 Max amplitude after scaling: 1.0000
+💾 Normalized and saved: bass.flac
+🔄 Converting drums.flac to mono
+📏 LUFS for drums.flac: -18.07
+🎚️ Normalizing drums.flac from -18.07 to -14.0 LUFS
+C:\Users\RoyWaisbord\OneDrive - Technion\Kneidel\Package_Creation\Kneidel_venv\lib\site-packages\pyloudnorm\normalize.py:62: UserWarning: Possible clipped samples in output.
+  warnings.warn("Possible clipped samples in output.")
+🔊 Max amplitude before scaling: 1.5780
+⚠️ Clipping detected after normalization. Scaling down by factor 1.58
+🔊 Max amplitude after scaling: 1.0000
+💾 Normalized and saved: drums.flac
+🔄 Converting guitar.flac to mono
+📏 LUFS for guitar.flac: -42.41
+⚠️  Skipping normalization for guitar.flac: LUFS=-42.41 < threshold=-35
+🔄 Converting other.flac to mono
+📏 LUFS for other.flac: -29.60
+🎚️ Normalizing other.flac from -29.60 to -14.0 LUFS
+C:\Users\RoyWaisbord\OneDrive - Technion\Kneidel\Package_Creation\Kneidel_venv\lib\site-packages\pyloudnorm\normalize.py:62: UserWarning: Possible clipped samples in output.
+  warnings.warn("Possible clipped samples in output.")
+🔊 Max amplitude before scaling: 1.4061
+⚠️ Clipping detected after normalization. Scaling down by factor 1.41
+🔊 Max amplitude after scaling: 1.0000
+💾 Normalized and saved: other.flac
+🔄 Converting piano.flac to mono
+📏 LUFS for piano.flac: -47.37
+⚠️  Skipping normalization for piano.flac: LUFS=-47.37 < threshold=-35
+🔄 Converting vocals.flac to mono
+📏 LUFS for vocals.flac: -17.25
+🎚️ Normalizing vocals.flac from -17.25 to -14.0 LUFS
+C:\Users\RoyWaisbord\OneDrive - Technion\Kneidel\Package_Creation\Kneidel_venv\lib\site-packages\pyloudnorm\normalize.py:62: UserWarning: Possible clipped samples in output.
+  warnings.warn("Possible clipped samples in output.")
+🔊 Max amplitude before scaling: 1.3299
+⚠️ Clipping detected after normalization. Scaling down by factor 1.33
+🔊 Max amplitude after scaling: 1.0000
+💾 Normalized and saved: vocals.flac
+
+📊 Stem LUFS scores before sorting: [('bass.flac', -21.766025086848472), ('drums.flac', -18.067211245325428), ('guitar.flac', -42.40582515622279), ('other.flac', -29.598770021941824), ('piano.flac', -47.372761403847484), ('vocals.flac', -17.251223044252168)]
+
+📊 Stem LUFS scores after sorting: [('bass.flac', -14.599813111801145), ('drums.flac', -17.96240779327785), ('guitar.flac', -42.40582515622279), ('other.flac', -16.981292589058217), ('piano.flac', -47.372761403847484), ('vocals.flac', -16.476103998752002)]
+🔁 Renamed 'piano.flac' → 'piano_Quiet.flac'
+🔁 Renamed 'guitar.flac' → 'guitar_Quiet.flac'
+🔁 Renamed 'other.flac' → '3.flac'
+🔁 Renamed 'bass.flac' → '4.flac'
+🔁 Renamed 'drums.flac' → '5.flac'
+🔁 Renamed vocals 'vocals.flac' → '6.flac'
+🔍 Fetching metadata for: תיק קטן
+Metadata saved to: C:/Users/RoyWaisbord/OneDrive - Technion/Kneidel/Packages/Test_6s\תיק קטן\תיק קטן - סטילה.json
+   ⚠️ Could not remove C:/Users/RoyWaisbord/OneDrive - Technion/Kneidel/Packages/Test_6s\htdemucs_6s: [WinError 5] Access is denied: 'C:/Users/RoyWaisbord/OneDrive - Technion/Kneidel/Packages/Test_6s\\htdemucs_6s'
+
+✅ All songs processed (skipping failed ones).
+Press any key to continue . . .
